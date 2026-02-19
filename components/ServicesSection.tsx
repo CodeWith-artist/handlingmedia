@@ -50,9 +50,8 @@ const services: {
 
 export default function ServicesSection() {
   return (
-    <section className="relative overflow-hidden bg-black ">
+    <section className="relative overflow-hidden bg-[#0a0a0a] ">
       {/* dotted grid background */}
-      <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.08)_1px,transparent_1px)] bg-size-[18px_18px]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Header */}

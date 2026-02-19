@@ -1,60 +1,161 @@
+"use client";
+
+import { ArrowRight, Calendar, Sparkles, Zap } from "lucide-react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 export default function HeroSection() {
-  return (
-    <section className="relative overflow-hidden min-h-screen bg-black flex items-center py-12 sm:py-16 lg:py-20">
-      {/* Background gradients */}
-      {/* <div className="absolute inset-0 bg-linear-to-br from-[#0b1220] via-[#0b1220] to-black" />
-      <div className="absolute right-0 top-0 h-full w-1/2 bg-linear-to-bl from-orange-600/20 via-transparent to-transparent" /> */}
+  const phrases = [
+    "AI Automation",
+    "WhatsApp Marketing",
+    "Sales Funnels",
+    "Customer Engagement",
+  ];
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid items-center gap-8 sm:gap-12 lg:gap-16 lg:grid-cols-2">
-          {/* Left content */}
-          <div className="text-center lg:text-left">
-            <div className="mb-4 sm:mb-6 flex items-center justify-center lg:justify-start gap-2 sm:gap-3 text-xs sm:text-sm text-gray-400">
-              <span className="rounded-full bg-orange-500/10 px-2.5 sm:px-3 py-1 text-orange-400 whitespace-nowrap">
-                What&apos;s new
+  const [index, setIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [fade, setFade] = useState(true);
+
+  // 🚀 Optimized typing animation (single interval)
+  useEffect(() => {
+    const currentWord = phrases[index];
+    const typingSpeed = isDeleting ? 40 : 80;
+
+    const interval = setInterval(() => {
+      setDisplayText((prev) => {
+        if (!isDeleting) {
+          if (prev.length < currentWord.length) {
+            return currentWord.slice(0, prev.length + 1);
+          } else {
+            setTimeout(() => setIsDeleting(true), 1500);
+            return prev;
+          }
+        } else {
+          if (prev.length > 0) {
+            return prev.slice(0, -1);
+          } else {
+            setIsDeleting(false);
+            setFade(false);
+
+            setTimeout(() => {
+              setIndex((prev) => (prev + 1) % phrases.length);
+              setFade(true);
+            }, 200);
+
+            return "";
+          }
+        }
+      });
+    }, typingSpeed);
+
+    return () => clearInterval(interval);
+  }, [isDeleting, index]);
+
+  const handleBookCall = () => {
+    console.log("Book a call clicked");
+  };
+
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a0a]">
+      
+      {/* 🔥 Gradient Background Glow */}
+      <div className="absolute inset-0 bg-linear-to-br from-orange-500/10 via-purple-500/5 to-transparent blur-3xl"></div>
+
+      <div className="relative mx-auto max-w-7xl px-6 w-full">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+
+          {/* LEFT CONTENT */}
+          <div className="space-y-8 text-center lg:text-left">
+
+            {/* Glass Badge */}
+            <div className="inline-flex items-center px-5 py-2 rounded-full 
+              bg-white/10 backdrop-blur-md border border-white/20 shadow-lg">
+              <Sparkles size={16} className="text-orange-400 mr-2" />
+              <span className="text-sm text-white/90 font-medium">
+                AI Powered Growth System
               </span>
-              <span className="hidden sm:inline">Just shipped v1.0 →</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold tracking-tight text-white">
-              Supercharge
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight text-white">
+              Save Time & Close More Deals with
               <br />
-              your web app
+              <span
+                className={`text-orange-400 transition-all duration-300 ${
+                  fade ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                }`}
+              >
+                {displayText}
+                <span className="animate-pulse">|</span>
+              </span>
             </h1>
 
-            <p className="mt-4 sm:mt-6 max-w-xl mx-auto lg:mx-0 text-base sm:text-lg text-gray-400">
-              Anim aute id magna aliqua ad ad non deserunt sunt.
-              Qui irure qui lorem cupidatat commodo.
+            {/* Subheadline (Conversion Optimized) */}
+            <p className="text-lg text-white/70 max-w-xl mx-auto lg:mx-0">
+              Automate leads, follow-ups, bookings, and payments on WhatsApp —
+              so you can focus on growing your business instead of chasing customers.
             </p>
 
-            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4">
-              <button className="w-full sm:w-auto rounded-lg bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-400">
-                Documentation
+            {/* 🔥 Conversion Optimized CTA */}
+            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+
+              {/* Primary CTA */}
+              <button
+                onClick={handleBookCall}
+                className="group relative inline-flex items-center justify-center 
+                bg-orange-500 hover:bg-orange-600 text-white px-8 py-5 
+                rounded-xl text-base font-semibold transition-all duration-300 
+                shadow-lg hover:shadow-orange-500/40 hover:scale-105"
+              >
+                <Calendar className="mr-2" size={20} />
+                Book Free Strategy Call
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </button>
 
-              <button className="w-full sm:w-auto group flex items-center justify-center gap-1 font-medium text-gray-300 transition hover:text-white">
-                View on GitHub
-                <span className="transition group-hover:translate-x-1">→</span>
-              </button>
+              {/* Secondary CTA */}
+              <a href="https://app.handlingmedia.io/">
+                <button
+                  className="inline-flex items-center justify-center 
+                  border border-white/20 bg-white/5 backdrop-blur-md 
+                  hover:bg-white/10 text-white px-8 py-5 
+                  rounded-xl text-base font-medium transition-all duration-300"
+                >
+                  <Zap className="mr-2" size={20} />
+                  Login
+                </button>
+              </a>
+
+            </div>
+
+            {/* 🔥 Trust Signal */}
+            <p className="text-sm text-white/40">
+              No coding required • Setup in 10 minutes • Cancel anytime
+            </p>
+
+          </div>
+
+          {/* RIGHT IMAGE PANEL */}
+          <div className="relative">
+            <div className="relative overflow-hidden rounded-2xl 
+              bg-white/5 backdrop-blur-lg border border-white/10 
+              shadow-2xl">
+
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              >
+                <source src="/hero-video.mp4" type="video/mp4" />
+              </video>
+              {/* Glow effect behind video */}
+              <div className="absolute -inset-8 bg-brand-orange/20 blur-3xl rounded-2xl -z-10"></div>
+              
             </div>
           </div>
 
-          {/* Right image panel */}
-          <div className="relative w-full">
-            <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-[#0f172a] shadow-2xl ring-1 ring-white/10">
-              {/* Image */}
-              <Image
-                src="/hero.jpeg"
-                alt="Hero preview"
-                width={900}
-                height={700}
-                className="h-full w-full object-cover"
-                priority
-              />
-            </div>
-          </div>
         </div>
       </div>
     </section>
