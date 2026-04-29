@@ -21,7 +21,7 @@ const UseCaseCard = ({
           icon: "text-green-400",
         };
       case "service":
-        return {
+        return {    
           gradient: "from-blue-400/30 via-blue-500/20 to-transparent",
           icon: "text-blue-400",
         };
