@@ -7,12 +7,134 @@ datasource db {
   provider = "mysql"
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+//user////////////////////////////////////////////
+enum Role {
+  USER
+  ADMIN
 }
+
+model User {
+  id             String    @id @default(cuid())
+  email          String    @unique
+  hashedPassword String
+  name           String?
+  role           Role      @default(USER)
+  emailVerified  Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  sessions       Session[]
+
+  @@index([email])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  refreshToken String   @unique // hashed refresh token stored here
+  userAgent    String?
+  ipAddress    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([refreshToken])
+}
+
+//user////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// prisma/schema.prisma
+//model User {
+//  id        String   @id @default(cuid())
+//  name      String?
+//  email     String   @unique
+//  posts     Post[]
+//  createdAt DateTime @default(now())
+//}
+//
+//model Post {
+//  id          String      @id @default(cuid())
+//  title       String
+//  slug        String      @unique
+//  content     String
+//  published   Boolean     @default(false)
+//  author      User?       @relation(fields: [authorId], references: [id])
+//  authorId    String?
+//  categories  PostCategory[]
+//  createdAt   DateTime    @default(now())
+//  updatedAt   DateTime    @updatedAt
+//}
+//
+//model Category {
+//  id        String         @id @default(cuid())
+//  name      String         @unique
+//  slug      String         @unique
+//  posts     PostCategory[]
+//  createdAt DateTime       @default(now())
+//}
+//
+//model PostCategory {
+//  post       Post     @relation(fields: [postId], references: [id])
+//  postId     String
+//  category   Category @relation(fields: [categoryId], references: [id])
+//  categoryId String
+//
+//  @@id([postId, categoryId])
+//}
 
