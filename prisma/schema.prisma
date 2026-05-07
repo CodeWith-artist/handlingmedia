@@ -11,6 +11,7 @@ datasource db {
 enum Role {
   USER
   ADMIN
+  MARKETING
 }
 
 model User {
@@ -24,7 +25,7 @@ model User {
   updatedAt      DateTime  @updatedAt
 
   sessions       Session[]
-
+  posts    Post[]
   @@index([email])
 }
 
@@ -46,7 +47,75 @@ model Session {
 //user////////////////////////////////////////////
 
 
+enum PostStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+}
 
+
+
+model Post {
+  id              String      @id @default(cuid())
+  title           String
+  slug            String      @unique
+  excerpt         String?     @db.Text
+  content         String      @db.LongText
+  coverImage      String?     // URL / path
+  status          PostStatus  @default(DRAFT)
+
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+
+  // Relations
+  authorId        String
+  author          User        @relation(fields: [authorId], references: [id])
+  categories      CategoryOnPost[]
+  tags            TagOnPost[]
+
+  publishedAt     DateTime?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([slug])
+  @@index([authorId])
+  @@index([status])
+}
+
+model Category {
+  id        String           @id @default(cuid())
+  name      String           @unique
+  slug      String           @unique
+  posts     CategoryOnPost[]
+  createdAt DateTime         @default(now())
+}
+
+model Tag {
+  id        String       @id @default(cuid())
+  name      String       @unique
+  slug      String       @unique
+  posts     TagOnPost[]
+  createdAt DateTime     @default(now())
+}
+
+model CategoryOnPost {
+  postId     String
+  categoryId String
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([postId, categoryId])
+}
+
+model TagOnPost {
+  postId String
+  tagId  String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+}
 
 
 
