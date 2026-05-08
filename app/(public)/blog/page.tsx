@@ -1,22 +1,29 @@
 // app/blog/page.tsx — Public listing
 import { getPublishedPosts } from "@/lib/blog/queries";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function BlogPage() {
   const posts = await getPublishedPosts();
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-16">
+    <div className="max-w-5xl mx-auto px-6 py-26 ">
       <h1 className="text-4xl font-bold text-white mb-12">Blog</h1>
       <div className="space-y-8">
         {posts.map((post) => (
           <article key={post.id} className="border-b border-gray-800 pb-8">
             {post.coverImage && (
-              <img
-                src={post.coverImage}
-                alt={post.title}
-                className="w-full h-52 object-cover rounded-xl mb-5"
-              />
+              <div className="relative w-full   h-64 mb-4">
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  fill
+                  className="object-cover rounded-lg mb-4"
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </div>
+
             )}
             <div className="flex flex-wrap gap-2 mb-3">
               {post.categories.map(({ category }) => (

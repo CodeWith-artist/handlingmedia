@@ -130,7 +130,7 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
               />
             ) : (
               <div
-                className="prose prose-invert prose-sm max-w-none p-5 min-h-[300px] text-gray-300"
+                className="prose prose-invert prose-sm max-w-none p-5 min-h-75 leading-relaxed text-gray-300"
                 dangerouslySetInnerHTML={{ __html: simpleMarkdown(content) }}
               />
             )}

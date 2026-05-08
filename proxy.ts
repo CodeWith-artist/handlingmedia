@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAccessToken } from "@/lib/auth/tokens";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/auth/constants";
+import { prisma } from "./lib/prisma";
 
 const PROTECTED_PREFIXES = ["/dashboard", "/settings", "/admin"];
 const GUEST_ONLY         = ["/login", "/register"];
@@ -95,6 +96,19 @@ export async function proxy(req: NextRequest) {
   if (isBlogRoute && session?.role === "USER") {
     return NextResponse.redirect(new URL("/unauthorized", req.url));
   }
+
+  if (session && isProtected) {
+  const user = await prisma.user.findUnique({
+    where:  { id: session.sub },
+    select: { suspended: true },
+  });
+  if (user?.suspended) {
+    const res = NextResponse.redirect(new URL("/login?suspended=true", req.url));
+    res.cookies.delete(ACCESS_COOKIE);
+    res.cookies.delete(REFRESH_COOKIE);
+    return res;
+  }
+}
 
   return NextResponse.next();
 }

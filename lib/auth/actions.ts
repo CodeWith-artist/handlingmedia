@@ -63,7 +63,7 @@ export async function registerAction(_prevState: AuthResult, formData: FormData)
 
   await issueTokensAndSession(user.id, user.email, user.role);
   redirect("/dashboard");
-}
+}                     
 
 // ── Login ─────────────────────────────────────────────────────
 export async function loginAction(_prevState: AuthResult, formData: FormData): Promise<AuthResult> {

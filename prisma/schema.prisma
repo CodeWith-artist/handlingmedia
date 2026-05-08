@@ -23,9 +23,26 @@ model User {
   emailVerified  Boolean   @default(false)
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-
+  suspended     Boolean       @default(false)
   sessions       Session[]
-  posts    Post[]
+  posts    Post[] 
+  invites       InviteToken[]
+  @@index([email])
+}
+
+model InviteToken {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  email     String
+  role      Role      @default(USER)
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  createdById String
+  createdBy   User   @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([token])
   @@index([email])
 }
 

@@ -24,7 +24,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
   if (!post || post.status !== "PUBLISHED") notFound();
 
   return (
-    <article className="max-w-3xl mx-auto px-6 py-16">
+    <article className="max-w-5xl mx-auto px-6 py-26">
       {post.coverImage && (
         <img src={post.coverImage} alt={post.title} className="w-full h-64 object-cover rounded-2xl mb-10" />
       )}
