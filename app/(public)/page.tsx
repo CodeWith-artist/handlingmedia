@@ -1,16 +1,11 @@
-import HeroSection from "@/components/home/HeroSection";
-import IntegrationsSection from "@/components/home/PowerfullIntergration";
-import ServicesSection from "@/components/home/ServicesSection";
-import UseCasesSection from "@/components/home/UsecaseSection";
-
 
 export default async function Home() {
   return (
    <>
-      <HeroSection />
-      <ServicesSection />
-      <IntegrationsSection />
-      <UseCasesSection />
+      <h1 className="text-3xl font-bold underline h-screen flex items-center justify-center">
+        Hello world!
+      </h1>
+     
    </>
   );
 }
