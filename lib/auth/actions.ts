@@ -61,7 +61,8 @@ export async function registerAction(_prevState: AuthResult, formData: FormData)
     data: { name, email, hashedPassword },
   });
 
-  await issueTokensAndSession(user.id, user.email, user.role);
+  const response = { success: true };
+  await issueTokensAndSession( user.id, user.email, user.role);
   redirect("/dashboard");
 }                     
 
@@ -91,9 +92,11 @@ export async function loginAction(_prevState: AuthResult, formData: FormData): P
     return { success: false, error: "Invalid email or password." };
   }
 
+  const response = { success: true };
+
   await issueTokensAndSession(user.id, user.email, user.role);
   redirect("/dashboard");
-}
+} 
 
 // ── Logout ────────────────────────────────────────────────────
 export async function logoutAction(): Promise<void> {
@@ -112,7 +115,7 @@ export async function logoutAllAction(): Promise<void> {
 }
 
 // ── Internal Helper ───────────────────────────────────────────
-async function issueTokensAndSession(userId: string, email: string, role: Role) {
+async function issueTokensAndSession( userId: string, email: string, role: Role) {
   const headerStore = await headers();
   const userAgent = headerStore.get("user-agent") ?? undefined;
   const ip = headerStore.get("x-forwarded-for")?.split(",")[0]?.trim() ?? undefined;
@@ -122,6 +125,7 @@ async function issueTokensAndSession(userId: string, email: string, role: Role) 
   const refreshJwt = signRefreshToken(userId);
 
   await createSession({ userId, rawRefreshToken: rawRefresh, userAgent, ipAddress: ip });
-  await setAuthCookies(accessToken, refreshJwt + "." + rawRefresh);
+  await setAuthCookies( accessToken, rawRefresh);
   // Cookie = JWT part + raw token part, validated separately
 }
+
