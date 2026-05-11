@@ -18,7 +18,7 @@ export default function AcceptInviteForm({
   const [state, formAction, pending] = useActionState(boundAction, initial);
 
   return (
-    <form action={formAction} className="space-y-5">
+      <form action={formAction} className="space-y-5">
       {!state.success && (
         <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
           {state.error}
@@ -64,6 +64,6 @@ export default function AcceptInviteForm({
       >
         {pending ? "Setting up account…" : "Create account"}
       </button>
-    </form>
+      </form>
   );
 }

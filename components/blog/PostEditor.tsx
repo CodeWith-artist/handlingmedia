@@ -247,11 +247,19 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
           >
             {pending ? "Saving…" : "Save post"}
           </button>
+          {state.success && state.message && (
+            <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 text-sm text-emerald-400">
+              {state.message}
+            </div>
+          )}
         </div>
       </div>
     </form>
   );
 }
+          
+        
+
 
 function SideCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (

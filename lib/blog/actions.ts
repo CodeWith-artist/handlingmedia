@@ -27,7 +27,7 @@ async function requireBlogActor() {
 }
 
 export type BlogResult =
-  | { success: true; postId?: string }
+  | { success: true; postId?: string; error?: string; message?: string }
   | { success: false; error: string; fields?: Record<string, string[]> };
 
 // ── Validation ────────────────────────────────────────────────
@@ -37,7 +37,7 @@ const PostSchema = z.object({
   slug:            z.string().min(3).max(200).trim().optional(),
   excerpt:         z.string().max(500).trim().optional(),
   content:         z.string().min(10, "Content is too short"),
-  coverImage:      z.string().url().optional().or(z.literal("")),
+  coverImage:      z.string().optional().or(z.literal("")),
   metaTitle:       z.string().max(60).trim().optional(),
   metaDescription: z.string().max(160).trim().optional(),
   categories:      z.string().optional(), // comma-separated IDs
@@ -109,7 +109,7 @@ export async function createPostAction(
   });
 
   revalidatePath("/dashboard/blog");
-  return { success: true, postId: post.id };
+  return { success: true, postId: post.id, message: "Post created successfully." };
 }
 
 // ── Update Post ───────────────────────────────────────────────
@@ -171,8 +171,8 @@ export async function updatePostAction(
   });
 
   revalidatePath("/dashboard/blog");
-  revalidatePath(`/blog/${slug}`);
-  return { success: true, postId };
+  revalidatePath(`/blog/${post.id}`);
+  return { success: true, postId: post.id, message: "Post updated successfully." };
 }
 
 // ── Change Status ─────────────────────────────────────────────
@@ -215,7 +215,7 @@ export async function deletePostAction(postId: string): Promise<BlogResult> {
 
   revalidatePath("/dashboard/blog");
   revalidatePath(`/blog/${post.slug}`);
-  return { success: true };
+  return { success: true, message: "Post deleted successfully." };
 }
 
 // ── Category Actions ──────────────────────────────────────────
@@ -237,5 +237,5 @@ export async function createCategoryAction(
   });
 
   revalidatePath("/dashboard/blog");
-  return { success: true };
+  return { success: true  };
 }
