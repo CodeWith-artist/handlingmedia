@@ -1,9 +1,8 @@
 // app/api/auth/refresh/route.ts
 
 import { NextRequest, NextResponse } from "next/server";
-import { getRefreshToken } from "@/lib/auth/cookies";
 import { rotateSession } from "@/lib/auth/sessions";
-import { signAccessToken, generateRefreshToken, verifyRefreshToken } from "@/lib/auth/tokens";
+import { signAccessToken, generateRefreshToken } from "@/lib/auth/tokens";
 import { setNewAuthCookies } from "@/lib/auth/cookies";
 import { prisma } from "@/lib/prisma";
   

@@ -2,6 +2,7 @@ import { NavGroup } from "./nav";
 
 export const navConfig: NavGroup[] = [
   {
+    groupLabel: "Dashboard",
     items: [
       {
         id: "dashboard",
@@ -22,15 +23,24 @@ export const navConfig: NavGroup[] = [
         children: [
           {
             id: "blog-all",
+            role: ["ADMIN", "MARKETING"],
             label: "All Posts",
             icon: "List",
             href: "/dashboard/blog",
           },
           {
             id: "blog-create",
+            role: ["ADMIN", "MARKETING"],
             label: "Create Post",
             icon: "PlusCircle",
             href: "/dashboard/blog/new",
+          },
+          {
+            id: "categories",
+            role: ["ADMIN"],
+            label: "Create Categories",
+            icon: "Tag",
+            href: "/dashboard/blog/categories",
           },
         ],
       },
@@ -38,6 +48,7 @@ export const navConfig: NavGroup[] = [
   },
   {
     groupLabel: "Users",
+    role: ["ADMIN"],
     items: [
       {
         id: "users",
@@ -51,6 +62,7 @@ export const navConfig: NavGroup[] = [
             label: "All Users",
             icon: "List",
             href: "/dashboard/users",
+            role: ["ADMIN"],
           },
           
         ],

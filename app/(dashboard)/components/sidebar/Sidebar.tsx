@@ -8,6 +8,8 @@ import { cn } from "@/lib/cn";
 import { NavItem } from "./NavItem";
 import { navConfig } from "./nav-config";
 import { logoutAction } from "@/lib/auth/actions";
+import { filterNavByRole } from "@/lib/filter-nav";
+import { Role } from "@/generated/prisma/client";
 interface SidebarProps {
   className?: string;
   session: {
@@ -24,6 +26,8 @@ function getIcon(name: string, className?: string) {
 
 
 
+
+
 export  function  Sidebar({ className , session }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const { email, role } = session || { email: "Guest", role: "Visitor" };
@@ -31,7 +35,22 @@ export  function  Sidebar({ className , session }: SidebarProps) {
   const handleLogout = async () => {
     await logoutAction();
   };
+  const filteredNav = navConfig
+  .filter((group) => {
+    // If group has no role restriction
+    if (!group.role) return true;
 
+    // Check group access
+    return group.role.includes(role as Role);
+  })
+  .map((group) => ({
+    ...group,
+
+    // Filter items recursively
+    items: filterNavByRole(group.items, role),
+  }))
+  .filter((group) => group.items.length > 0);
+  
   return (
     <aside
       className={cn(
@@ -57,7 +76,7 @@ export  function  Sidebar({ className , session }: SidebarProps) {
 
       {/* ── Nav ────────────────────────────────────────────── */}
       <nav className="flex-1 overflow-y-auto overflow-x-hidden px-2 py-3 space-y-5 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-        {navConfig.map((group, gi) => (
+        {filteredNav.map((group, gi) => (
           <div key={gi}>
             {group.groupLabel && !collapsed && (
               <p className="px-3 mb-1 text-[10px] uppercase tracking-[0.12em] font-semibold text-slate-600">
@@ -71,6 +90,7 @@ export  function  Sidebar({ className , session }: SidebarProps) {
               {group.items.map((item) => (
                 collapsed ? (
                   /* collapsed: icon only with tooltip */
+                  
                   <li key={item.id} className="group relative">
                     <Link
                       href={item.href ?? "#"}

@@ -14,5 +14,6 @@ export interface NavItem {
 
 export interface NavGroup {
   groupLabel?: string;
+  role?: Role[] | "ALL"; // Optional array of roles that can access this group  
   items: NavItem[];
 }
