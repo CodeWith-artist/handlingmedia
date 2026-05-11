@@ -5,7 +5,7 @@ import { PostStatus } from "@/generated/prisma/client";
 
 export async function getAllPostsForDashboard(userId?: string, role?: string) {
   return prisma.post.findMany({
-    where: role === "ADMIN" ? undefined : { authorId: userId },
+    where: role === role ? undefined : { authorId: userId },
     include: {
       author:     { select: { name: true, email: true } },
       categories: { include: { category: true } },

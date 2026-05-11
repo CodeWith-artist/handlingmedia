@@ -92,7 +92,7 @@ export default function Navbar() {
             <button onClick={() => {redirect("/login")}} className="hidden md:block cursor-pointer hover:scale-105 text-white border border-white/20 px-3 py-1.5 rounded-lg">
               Login
             </button>
-            <button  className="hidden md:block bg-[#5a67d8] px-4 py-2 rounded-lg text-white">
+            <button  className="hidden md:block border-2 border-orange-500 px-4 py-2 rounded-lg text-white">
               Get Started
             </button>
           </div>
