@@ -33,6 +33,7 @@ export async function createSession({
 
 export async function rotateSession(oldRawToken: string, newRawToken: string) {
   const oldHashed = hashRefreshToken(oldRawToken);
+  console.log("Rotating session: old hashed token", oldHashed);
   const newHashed = hashRefreshToken(newRawToken);
   const expiresAt = new Date(Date.now() + REFRESH_TOKEN_EXPIRY_SECONDS * 1000);
 

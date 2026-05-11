@@ -10,19 +10,18 @@ interface Props {
   searchParams: {
     search?: string;
     role?:   string;
-    page?:   string;
+    page?:   string | number;
   };
 }
 
 export default async function UsersPage({ searchParams }: Props) {
   const session = await requireRole("ADMIN");
+  const { page = 1, search = "", role = "ALL" } = await searchParams;
 
-  const page   = await Number(searchParams.page ?? 1);
-  const search = await searchParams.search ?? "";
-  const role   = await searchParams.role   ?? "ALL";
+  const pageInt = Number(page);
 
   const [data, invites] = await Promise.all([
-    getUserList({ search, role, page }),
+    getUserList({ search, role, page: pageInt }),
     getPendingInvites(),
   ]);
 

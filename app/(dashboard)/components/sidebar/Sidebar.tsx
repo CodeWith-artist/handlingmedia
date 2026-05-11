@@ -7,9 +7,13 @@ import * as Icons from "lucide-react";
 import { cn } from "@/lib/cn";
 import { NavItem } from "./NavItem";
 import { navConfig } from "./nav-config";
-
+import { logoutAction } from "@/lib/auth/actions";
 interface SidebarProps {
   className?: string;
+  session: {
+    email: string;
+    role: string;
+  } | null;
 }
 
 function getIcon(name: string, className?: string) {
@@ -20,8 +24,13 @@ function getIcon(name: string, className?: string) {
 
 
 
-export  function  Sidebar({ className }: SidebarProps) {
+export  function  Sidebar({ className , session }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const { email, role } = session || { email: "Guest", role: "Visitor" };
+
+  const handleLogout = async () => {
+    await logoutAction();
+  };
 
   return (
     <aside
@@ -88,7 +97,7 @@ export  function  Sidebar({ className }: SidebarProps) {
       <div className="shrink-0 border-t border-white/5 p-3">
         <div
           className={cn(
-            "flex items-center gap-3 rounded-lg p-2 hover:bg-white/5 cursor-pointer transition-colors duration-150",
+            "flex items-center gap-3 rounded-lg p-2 hover:bg-white/5 transition-colors duration-150",
             collapsed && "justify-center"
           )}
         >
@@ -100,12 +109,12 @@ export  function  Sidebar({ className }: SidebarProps) {
           </div>
           {!collapsed && (
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold text-slate-200 truncate">Mohit</p>
-              <p className="text-[10px] text-slate-500 truncate">Admin</p>
+              <p className="text-xs font-semibold text-slate-200 truncate">{email}</p>
+              <p className="text-[10px] text-slate-500 truncate">{role}</p>
             </div>
           )}
           {!collapsed && (
-            <button className="text-slate-600 hover:text-slate-300 shrink-0 transition-colors duration-150">
+            <button onClick={handleLogout} className="text-slate-600 hover:text-slate-300 cursor-pointer shrink-0 transition-colors duration-150">
               {getIcon("LogOut", "w-3.5 h-3.5")}
             </button>
           )}
