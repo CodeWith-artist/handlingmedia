@@ -32,7 +32,7 @@ export const DesktopNavItem = ({
     >
       <Link
         href={href}
-        className="flex items-center gap-1 text-[15px] font-medium text-gray-300 hover:text-white hover:bg-[#ff7300]/30 rounded-2xl transition px-2 py-2"
+        className="flex items-center gap-1 text-[12px] font-medium text-gray-300 hover:text-white hover:bg-[#ff7300]/30 rounded-2xl transition px-2 py-2"
       >
         {label}
         {hasDropdown && (

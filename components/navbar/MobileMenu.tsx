@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronDown, FaTimes } from "react-icons/fa";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { PRODUCTS, MOBILE_NAV_LINKS } from "./navconfig";
+import { SERVICES,  MOBILE_NAV_LINKS } from "./navconfig";
+import { Login } from "./Login";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -19,16 +20,16 @@ export const MobileMenu = ({ isOpen, onClose }: Props) => {
   const [productsOpen, setProductsOpen] = useState(false);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence >
       {isOpen && (
-        <>
+        <> 
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 hidden"
           />
 
           {/* Sheet */}
@@ -55,7 +56,7 @@ export const MobileMenu = ({ isOpen, onClose }: Props) => {
                 onClick={() => setProductsOpen(!productsOpen)}
                 className="flex justify-between w-full text-gray-300 text-left"
               >
-                Products
+                Services
                 <FaChevronDown
                   className={cn("transition-transform", productsOpen && "rotate-180")}
                 />
@@ -69,7 +70,7 @@ export const MobileMenu = ({ isOpen, onClose }: Props) => {
                     exit={{ height: 0, opacity: 0 }}
                     className="ml-4 overflow-hidden space-y-2 text-sm"
                   >
-                    {PRODUCTS.map((item) => (
+                    {SERVICES.map((item) => (
                       <Link
                         key={item.label}
                         href={item.href}
@@ -93,15 +94,7 @@ export const MobileMenu = ({ isOpen, onClose }: Props) => {
               ))}
             </div>
 
-            {/* Actions */}
-            <div className="px-6 py-6 border-t border-white/10 space-y-3">
-              <button className="w-full border border-white/20 py-2 rounded-lg text-white">
-                Login
-              </button>
-              <button className="w-full bg-[#5a67d8] py-2 rounded-lg text-white">
-                Get Started
-              </button>
-            </div>
+            
           </motion.div>
         </>
       )}
