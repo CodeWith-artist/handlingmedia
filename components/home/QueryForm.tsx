@@ -23,8 +23,7 @@ export default function QueryForm() {
     "h-11 w-full bg-white/[0.06] border border-white/10 rounded-[10px] px-4 text-white placeholder-white/30 text-sm outline-none focus:border-orange-500/70 transition-colors duration-200";
 
   return (
-    <div className="flex flex-row items-center gap-2 w-full max-w-6xl mx-auto px-4 py-10">
-
+    <div className="hidden md:flex flex-row items-center gap-2 w-full max-w-6xl mx-auto px-4 py-2 border rounded-[10px] bg-white/6 border-white/60 " >
       {/* Query — widest */}
       <input
         type="text"
@@ -61,7 +60,7 @@ export default function QueryForm() {
           active:scale-95 hover:opacity-85
           ${sent
             ? "bg-green-500/15 border border-green-400/40 text-green-400"
-            : "bg-gradient-to-br from-orange-500 to-orange-700 text-black border-0"
+            : "bg-linear-to-br from-orange-500 to-orange-700 text-black border-0"
           }
         `}
       >
