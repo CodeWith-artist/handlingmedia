@@ -69,7 +69,7 @@ export default function HowItWorks() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#060606] overflow-hidden py-28 border-t border-white/[0.04]"
+      className="relative bg-[#060606] overflow-hidden py-28 border-t border-white/4"
     >
       {/* Diagonal stripe texture */}
       <div
@@ -104,7 +104,7 @@ export default function HowItWorks() {
       {/* Ambient glow — moves with active step */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-0 w-[500px] h-[500px] rounded-full transition-all duration-700"
+        className="pointer-events-none absolute left-0 w-125 h-125 rounded-full transition-all duration-700"
         style={{
           top:       `${(active / (STEPS.length - 1)) * 60 + 10}%`,
           transform: "translateY(-50%)",
@@ -170,7 +170,7 @@ export default function HowItWorks() {
 
           {/* Left: step nav pills */}
           <div
-            className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 flex-shrink-0 transition-all duration-700 delay-200"
+            className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 shrink-0 transition-all duration-700 delay-200"
             style={{
               opacity:   visible ? 1 : 0,
               transform: visible ? "translateX(0)" : "translateX(-20px)",
@@ -180,7 +180,7 @@ export default function HowItWorks() {
               <button
                 key={step.number}
                 onClick={() => setActive(i)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 flex-shrink-0 group"
+                className="flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 shrink-0 group"
                 style={{
                   background:  active === i ? "rgba(249,115,22,0.12)" : "transparent",
                   border:      `0.5px solid ${active === i ? "rgba(249,115,22,0.4)" : "rgba(255,255,255,0.06)"}`,
@@ -210,7 +210,7 @@ export default function HowItWorks() {
 
                 {/* Active indicator dot */}
                 <span
-                  className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-500 transition-opacity duration-200 flex-shrink-0"
+                  className="ml-auto w-1.5 h-1.5 rounded-full bg-orange-500 transition-opacity duration-200 shrink-0"
                   style={{ opacity: active === i ? 1 : 0 }}
                 />
               </button>
@@ -288,7 +288,7 @@ export default function HowItWorks() {
           </div>
           <Link
             href="/contact"
-            className="flex-shrink-0 rounded-xl px-8 py-3.5 font-black text-white transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+            className="shrink-0 rounded-xl px-8 py-3.5 font-black text-white transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
             style={{
               background:    "#f97316",
               fontFamily:    "'Barlow Condensed', sans-serif",
@@ -341,7 +341,7 @@ function StepPanel({
       <div className="flex items-center gap-4 px-6 py-5">
         {/* Number badge */}
         <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center font-black flex-shrink-0 transition-all duration-300"
+          className="w-10 h-10 rounded-xl flex items-center justify-center font-black shrink-0 transition-all duration-300"
           style={{
             fontFamily:    "'Barlow Condensed', sans-serif",
             fontSize:      "14px",
@@ -356,7 +356,7 @@ function StepPanel({
 
         {/* Icon */}
         <span
-          className="text-xl transition-all duration-300 flex-shrink-0"
+          className="text-xl transition-all duration-300 shrink-0"
           style={{
             filter:    active ? "none" : "grayscale(1) opacity(0.3)",
             transform: active ? "scale(1.1)" : "scale(1)",
@@ -390,7 +390,7 @@ function StepPanel({
 
         {/* Chevron */}
         <span
-          className="text-orange-500/50 transition-transform duration-300 flex-shrink-0 text-lg"
+          className="text-orange-500/50 transition-transform duration-300 shrink-0 text-lg"
           style={{ transform: active ? "rotate(180deg)" : "rotate(0deg)" }}
         >
           ↓
@@ -423,7 +423,7 @@ function StepPanel({
             </p>
 
             {/* Tags */}
-            <div className="flex flex-col gap-2 flex-shrink-0">
+            <div className="flex flex-col gap-2 shrink-0">
               {step.tags.map((tag) => (
                 <span
                   key={tag}
@@ -438,7 +438,7 @@ function StepPanel({
                   }}
                 >
                   <span
-                    className="w-1 h-1 rounded-full bg-orange-500 flex-shrink-0"
+                    className="w-1 h-1 rounded-full bg-orange-500 shrink-0"
                   />
                   {tag}
                 </span>

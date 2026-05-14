@@ -157,7 +157,7 @@ export default function PricingSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#070707] overflow-hidden py-28 border-t border-white/[0.04]"
+      className="relative bg-[#070707] overflow-hidden py-28 border-t border-white/4"
     >
       {/* Noise grain overlay */}
       <div
@@ -173,7 +173,7 @@ export default function PricingSection() {
       {/* Radial glow centre */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full"
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 rounded-full"
         style={{
           background:
             "radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 60%)",

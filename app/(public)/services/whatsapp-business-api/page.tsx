@@ -1,3 +1,9 @@
+import HeroSection from "@/components/HeroServiceSection";
+
 export default function WhatsAppBusinessAPI() {
-    return <h1>WhatsApp Business API</h1>
+    return (
+        <>
+        <HeroSection />
+        </>
+    )
 }

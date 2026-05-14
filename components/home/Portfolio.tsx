@@ -225,7 +225,7 @@ export default function PortfolioSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#060606] overflow-hidden py-28 border-t border-white/[0.04]"
+      className="relative bg-[#060606] overflow-hidden py-28 border-t border-white/4"
     >
       {/* Scan-line texture */}
       <div
@@ -245,14 +245,14 @@ export default function PortfolioSection() {
       {/* Corner glows */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <div
-          className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full"
+          className="absolute top-0 left-0 w-100 h-100 rounded-full"
           style={{
             background: "radial-gradient(circle, rgba(249,115,22,0.07) 0%, transparent 65%)",
             transform:  "translate(-30%, -30%)",
           }}
         />
         <div
-          className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full"
+          className="absolute bottom-0 right-0 w-125 h-125 rounded-full"
           style={{
             background: "radial-gradient(circle, rgba(249,115,22,0.05) 0%, transparent 65%)",
             transform:  "translate(30%, 30%)",
@@ -516,7 +516,7 @@ function CaseCard({
 
         {/* Top accent line */}
         <div
-          className="absolute top-0 left-0 right-0 h-[2px] transition-opacity duration-300"
+          className="absolute top-0 left-0 right-0 h-0.5 transition-opacity duration-300"
           style={{
             background: `linear-gradient(90deg, transparent, ${cs.color}, transparent)`,
             opacity:    hovered || expanded ? 1 : 0,
