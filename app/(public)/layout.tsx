@@ -1,7 +1,7 @@
 import Navbar from "@/components/navbar/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Footer } from "@/components/home/Footer";
+import { Footer , CtaBanner  } from "@/components/home/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Added some dummy content padding so you can scroll to test it */}
         
         {children}
+        <CtaBanner />
         <Footer />
       </body>
     </html>                                  

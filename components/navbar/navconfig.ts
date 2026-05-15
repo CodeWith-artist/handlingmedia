@@ -10,7 +10,7 @@ export type NavItemConfig = NavLink & {
 
 export const SERVICES: NavLink[] = [
   { label: "WhatsApp Business API", href: "/services/whatsapp-business-api" },
-  { label: "Custom Website Development", href: "/services/web-development" },
+  { label: "Custom Website Development", href: "/services/custom-website-development" },
   { label: "Mobile App Development", href: "/services/app-development" },
   { label: "Shopify Development", href: "/services/shopify-development" },
   { label: "WordPress Development", href: "/services/wordpress-development" },
