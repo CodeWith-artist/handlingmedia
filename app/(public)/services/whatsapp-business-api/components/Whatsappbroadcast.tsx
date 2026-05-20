@@ -69,7 +69,7 @@ export default function WhatsAppBroadcast() {
       setTimeout(() => setMsgStep(2), 1300),
       setTimeout(() => setMsgStep(3), 2000),
     ];
-    return () => timers.forEach(clearTimeout);
+    return () => timers.forEach(clearTimeout);       
   }, [visible]);
 
   return (

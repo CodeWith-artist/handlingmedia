@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import {
   SERVICES,
-  SOLUTIONS,
   WHATSAPP_SOLUTIONS,
   MOBILE_NAV_LINKS,
 } from "@/components/navbar/navconfig"; // adjust path to your actual nav config
@@ -15,10 +14,6 @@ const FOOTER_COLS = [
   {
     heading: "Services",
     links: SERVICES,
-  },
-  {
-    heading: "Solutions",
-    links: SOLUTIONS,
   },
   {
     heading: "WhatsApp",

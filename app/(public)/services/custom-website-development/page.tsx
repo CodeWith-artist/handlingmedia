@@ -1,5 +1,10 @@
 import HeroSection from "@/components/HeroServiceSection";
-
+import TrustStrip from "./components/TrustStrip";
+import ProblemsSection from "./components/ProblemsSection";
+import ServicesSection from "./components/ServicesSection";
+import DevelopmentProcessSection from "./components/DevelopmentProcessSection";
+import TechStackSection from "./components/TechStackSection";
+import WhyChooseUsSection from "./components/WhyChooseUsCompact";
 export default function CustomWebsiteDevelopment() {
     return (
         <>
@@ -18,6 +23,12 @@ export default function CustomWebsiteDevelopment() {
                     "Conversion-Focused",
                 ]}
                 />
+            <TrustStrip />
+            <ProblemsSection />
+            <ServicesSection />
+            <DevelopmentProcessSection />
+            <TechStackSection />
+            <WhyChooseUsSection />
         </>
     )
 }

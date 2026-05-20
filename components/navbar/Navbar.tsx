@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useScroll, useMotionValueEvent } from "framer-motion";
-import { FaGithub, FaYoutube, FaBars } from "react-icons/fa";
+import {  FaYoutube, FaBars, FaInstagram } from "react-icons/fa";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -79,8 +79,20 @@ export default function Navbar() {
           {/* Right */}
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-4">
-              <FaGithub className="text-white text-xl" />
-              <FaYoutube className="text-white text-xl" />
+              <Link
+                href="https://www.youtube.com/@handlingmedia"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+              <FaYoutube className="text-white text-xl cursor-pointer" />
+              </Link>
+              <Link
+                href="https://www.instagram.com/handlingmedia/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+              <FaInstagram className="text-white text-xl cursor-pointer" />
+              </Link>
             </div>
 
             <button
