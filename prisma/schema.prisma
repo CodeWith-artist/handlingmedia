@@ -135,6 +135,37 @@ model TagOnPost {
 }
 
 
+//form 
+
+// prisma/schema.prisma
+
+model Lead {
+  id        String   @id @default(cuid())
+  name      String
+  company   String?
+  email     String
+  phone     String
+  service   String
+  website   String?
+  message   String   @db.Text
+  source    String?
+  status    LeadStatus @default(NEW)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
+
 
 
 

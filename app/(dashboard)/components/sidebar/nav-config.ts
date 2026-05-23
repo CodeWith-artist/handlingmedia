@@ -69,5 +69,27 @@ export const navConfig: NavGroup[] = [
       },
     ],
   },
+  {
+    groupLabel: "Leads",
+    items: [
+      {
+        id: "leads",
+        label: "Leads",
+        icon: "Users",
+        href: "/dashboard/leads",
+        role: ["ADMIN"],
+        children: [
+          {
+            id: "leads-all",
+            label: "All Leads",
+            icon: "List",
+            href: "/dashboard/leads",
+            role: ["ADMIN"],
+          },
+          
+        ],
+      },
+    ],
+  }
     
 ];

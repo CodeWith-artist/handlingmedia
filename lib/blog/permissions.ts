@@ -16,7 +16,7 @@ export function canCreate(actor: BlogActor) {
 export function canEdit(actor: BlogActor, authorId: string) {
   if (actor.role === "ADMIN") return true;
   if (actor.role === "MARKETING" && actor.userId === authorId) return true;
-  return false;
+  return false; 
 }
 
 // Can this actor DELETE a post? — ADMIN only
