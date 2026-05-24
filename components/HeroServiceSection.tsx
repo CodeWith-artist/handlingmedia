@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { redirect } from "next/navigation";
 interface HeroSectionProps {
   badge?: string;
   title: string;
@@ -111,14 +111,14 @@ export default function HeroSection({
           }`}
         >
           <button
-            onClick={onPrimaryClick}
+            onClick={onPrimaryClick || (() => redirect("/contact"))}
             className="bg-linear-to-r from-orange-500 via-orange-600 to-orange-700 hover:from-orange-400 hover:to-orange-600 text-white text-[0.82rem] font-semibold px-5 py-2.5 rounded-md shadow-[0_0_20px_rgba(249,115,22,0.4)] hover:shadow-[0_0_30px_rgba(249,115,22,0.6)] hover:-translate-y-0.5 transition-all duration-200 tracking-wide"
           >
             {primaryButtonText}
           </button>
 
           <button
-            onClick={onSecondaryClick}
+            onClick={onSecondaryClick || (() => redirect("/solutions"))}
             className="text-orange-300 border border-orange-500/35 hover:border-orange-500/60 hover:bg-orange-500/10 hover:text-white text-[0.82rem] font-medium px-5 py-2.5 rounded-md backdrop-blur-sm transition-all duration-200 tracking-wide"
           >
             {secondaryButtonText}

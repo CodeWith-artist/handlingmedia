@@ -12,7 +12,7 @@ export default async function Home() {
   return (
    <>
       <HeroSection />
-      <QueryForm />
+      {/* <QueryForm /> */}
       <TrustedBy />
       <ServicesSection />
       <HowItWorks />

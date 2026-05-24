@@ -221,24 +221,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA */}
-      <section className="relative overflow-hidden py-28">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.18),transparent_55%)]" />
-
-        <div className="relative mx-auto flex max-w-4xl flex-col items-center px-6 text-center">
-          <h2 className="text-4xl font-black leading-tight md:text-6xl">
-            Ready To Build Something Amazing?
-          </h2>
-
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
-            Let’s create a modern digital experience for your business with
-            powerful design and scalable technology.
-          </p>
-
-          <button className="mt-10 rounded-2xl bg-orange-500 px-8 py-4 text-sm font-semibold text-black transition hover:scale-105 hover:bg-orange-400">
-            Book A Free Consultation
-          </button>
-        </div>
-      </section>
+      
     </main>
   );
 }
