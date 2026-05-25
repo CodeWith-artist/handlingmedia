@@ -72,7 +72,7 @@ export default function DevelopmentProcessSection() {
       {/* Grid Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(249,115,22,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(249,115,22,0.03)_1px,transparent_1px)] bg-size-[42px_42px]" />
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-6xl">
 
         {/* Header */}
         <div className="mx-auto mb-24 max-w-3xl text-center">

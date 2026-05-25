@@ -260,7 +260,7 @@ export default function PortfolioSection() {
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-6">
 
         {/* ── Header ── */}
         <div

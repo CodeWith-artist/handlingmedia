@@ -7,7 +7,7 @@ import solutions from "./components/solutions";
 export default function BusinessSolutionsGrid() {
   return (
     <section className="w-full bg-black py-24 text-white">
-      <div className="mx-auto max-w-7xl px-4">
+      <div className="mx-auto max-w-6xl px-4">
         {/* Heading */}
         <div className="mb-10 text-center">
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-orange-500">

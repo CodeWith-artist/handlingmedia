@@ -39,7 +39,7 @@ export default function TrustedBy() {
         style={{ background: "radial-gradient(ellipse at center, rgba(220,80,20,0.12) 0%, transparent 70%)" }}
       />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-6xl mx-auto px-6">
 
         {/* Heading */}
         <div className="text-center mb-14">

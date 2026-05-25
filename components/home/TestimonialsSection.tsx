@@ -114,7 +114,7 @@ export default function TestimonialsSection() {
       {/* Orange Glow */}
       <div className="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-orange-500/10 blur-3xl" />
 
-      <div className="relative mx-auto max-w-7xl px-6">
+      <div className="relative mx-auto max-w-6xl px-6">
         {/* Heading */}
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <span className="inline-flex rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-1 text-sm text-orange-400">

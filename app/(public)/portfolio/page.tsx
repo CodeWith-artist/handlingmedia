@@ -63,7 +63,7 @@ export default function PortfolioPage() {
       <section className="relative overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.25),transparent_45%)]" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 py-28 text-center">
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center px-6 py-28 text-center">
           <div className="mb-6 inline-flex items-center rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-sm text-orange-400 backdrop-blur-sm">
             Creative Digital Agency
           </div>
@@ -92,7 +92,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Stats */}
-      <section className="mx-auto grid max-w-7xl grid-cols-2 gap-5 px-6 py-14 md:grid-cols-4">
+      <section className="mx-auto grid max-w-6xl grid-cols-2 gap-5 px-6 py-14 md:grid-cols-4">
         {stats.map((item) => (
           <div
             key={item.label}
@@ -107,7 +107,7 @@ export default function PortfolioPage() {
       </section>
 
       {/* Portfolio */}
-      <section className="mx-auto max-w-7xl px-6 py-20">
+      <section className="mx-auto max-w-6xl px-6 py-20">
         <div className="mb-16 text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-orange-500">
             Our Portfolio
@@ -175,7 +175,7 @@ export default function PortfolioPage() {
 
       {/* Services */}
       <section className="border-y border-white/10 bg-zinc-950/60 py-24">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-6xl px-6">
           <div className="mb-16 text-center">
             <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-orange-500">
               What We Do

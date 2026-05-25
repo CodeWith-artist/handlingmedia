@@ -309,7 +309,7 @@ function PlatformsSection() {
 
   return (
     <section ref={ref} className="py-24 px-6 border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <SectionEyebrow label="Platforms" visible={v} />
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
           <h2
@@ -354,7 +354,7 @@ function AppTypesSection() {
 
   return (
     <section ref={ref} className="py-24 px-6 bg-white/[0.01] border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <SectionEyebrow label="What we build" visible={v} />
         <h2
           className={`font-black text-white leading-[0.9] mb-16 transition-all duration-700 delay-100 ${v ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
@@ -412,7 +412,7 @@ function ProcessSection() {
 
   return (
     <section id="process" ref={ref} className="py-24 px-6 border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <SectionEyebrow label="How we work" visible={v} />
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16">
           <h2
@@ -493,7 +493,7 @@ function TechStackSection() {
 
   return (
     <section ref={ref} className="py-24 px-6 bg-white/[0.01] border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <SectionEyebrow label="Tech stack" visible={v} />
         <h2
           className={`font-black text-white leading-[0.9] mb-16 transition-all duration-700 delay-100 ${v ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}

@@ -260,7 +260,7 @@ export function Footer() {
         }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-6">
+      <div className="relative max-w-6xl mx-auto px-6">
 
         {/* ── Top: brand + nav cols ── */}
         <div className="pt-16 pb-12 grid grid-cols-2 md:grid-cols-6 gap-10 border-b"

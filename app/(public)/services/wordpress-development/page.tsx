@@ -298,7 +298,7 @@ function SiteTypesSection() {
   const v   = useInView(ref as React.RefObject<Element>);
   return (
     <section ref={ref} className="py-24 px-6 border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Eyebrow label="What we build" visible={v} />
         <div className={`flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 transition-all duration-700 delay-100 ${v ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}>
           <h2 className="font-black text-white leading-[0.9] max-w-lg"
@@ -346,7 +346,7 @@ function FeaturesSection() {
   const v   = useInView(ref as React.RefObject<Element>);
   return (
     <section ref={ref} className="py-24 px-6 bg-white/[0.01] border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Eyebrow label="What's included" visible={v} />
         <h2
           className={`font-black text-white leading-[0.9] mb-16 transition-all duration-700 delay-100 ${v ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
@@ -389,7 +389,7 @@ function ProcessSection() {
 
   return (
     <section id="process" ref={ref} className="py-24 px-6 border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Eyebrow label="Our process" visible={v} />
         <div className={`flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 transition-all duration-700 delay-100 ${v ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}>
           <h2 className="font-black text-white leading-[0.9]"
@@ -454,7 +454,7 @@ function TechSection() {
   const v   = useInView(ref as React.RefObject<Element>);
   return (
     <section ref={ref} className="py-24 px-6 bg-white/[0.01] border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Eyebrow label="Tech stack" visible={v} />
         <h2
           className={`font-black text-white leading-[0.9] mb-16 transition-all duration-700 delay-100 ${v ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
