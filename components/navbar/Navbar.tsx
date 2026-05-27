@@ -50,7 +50,7 @@ export default function Navbar() {
         >
           {/* Left */}
           <div className="flex items-center">
-            <Logo src="/hlogo.png" />
+            <Logo src="/logo.png"  />
 
             <div className="hidden md:flex items-center gap-1">
               {DESKTOP_NAV_ITEMS.map((item) => (
@@ -79,13 +79,7 @@ export default function Navbar() {
           {/* Right */}
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-4">
-              <Link
-                href="https://www.youtube.com/@handlingmedia"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-              <FaYoutube className="text-white text-xl cursor-pointer" />
-              </Link>
+             
               <Link
                 href="https://www.instagram.com/handlingmedia/"
                 target="_blank"
@@ -102,7 +96,7 @@ export default function Navbar() {
               <FaBars />
             </button>
 
-            <Login />
+            {/* <Login /> */}
            
           </div>
         </motion.nav>

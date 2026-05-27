@@ -2,41 +2,25 @@
 
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  SERVICES,
-  WHATSAPP_SOLUTIONS,
-  MOBILE_NAV_LINKS,
-} from "@/components/navbar/navconfig"; // adjust path to your actual nav config
+import { Logo } from "../navbar/Logo";
+
 
 // ── footer nav data ───────────────────────────────────────────
 
 const FOOTER_COLS = [
-  {
-    heading: "Services",
-    links: SERVICES,
-  },
-  {
-    heading: "WhatsApp",
-    links: WHATSAPP_SOLUTIONS,
-  },
+
+ 
   {
     heading: "Company",
     links: [
       { label: "About",     href: "/about"     },
-      { label: "Portfolio", href: "/portfolio" },
       { label: "Blog",      href: "/blog"      },
-      { label: "Pricing",   href: "/pricing"   },
       { label: "Contact",   href: "/contact"   },
     ],
   },
 ];
 
-const SOCIALS = [
-  { label: "GitHub",   href: "https://github.com",   icon: GithubIcon   },
-  { label: "YouTube",  href: "https://youtube.com",  icon: YoutubeIcon  },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
-  { label: "WhatsApp", href: "https://wa.me/91XXXXXXXXXX", icon: WhatsappIcon },
-];
+
 
 // ── intersection hook ─────────────────────────────────────────
 
@@ -269,24 +253,7 @@ export function Footer() {
           {/* Brand col — spans 2 on md */}
           <div className="col-span-2 md:col-span-2">
             {/* Logo */}
-            <Link href="/" className="inline-flex items-center gap-3 mb-5 group">
-              <div
-                className="w-9 h-9 rounded-lg flex items-center justify-center font-black text-white text-sm flex-shrink-0 transition-all duration-200 group-hover:scale-105"
-                style={{
-                  background:    "#f97316",
-                  fontFamily:    "'Barlow Condensed', sans-serif",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                H
-              </div>
-              <span
-                className="text-white font-black text-lg"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: "0.02em" }}
-              >
-                handlingmedia
-              </span>
-            </Link>
+            <Logo src="/logo.png" />
 
             <p
               className="text-sm text-white/30 leading-relaxed mb-6 max-w-xs"
@@ -296,7 +263,7 @@ export function Footer() {
             </p>
 
             {/* Socials */}
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               {SOCIALS.map((s) => (
                 <a
                   key={s.label}
@@ -324,7 +291,7 @@ export function Footer() {
                   <s.icon />
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Nav cols */}

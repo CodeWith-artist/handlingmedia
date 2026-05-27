@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaChevronDown, FaTimes } from "react-icons/fa";
 import { ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { SERVICES,  MOBILE_NAV_LINKS } from "./navconfig";
+import {   MOBILE_NAV_LINKS } from "./navconfig";
 import { Login } from "./Login";
 
 function cn(...inputs: ClassValue[]) {
@@ -62,26 +62,7 @@ export const MobileMenu = ({ isOpen, onClose }: Props) => {
                 />
               </button>
 
-              <AnimatePresence>
-                {productsOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="ml-4 overflow-hidden space-y-2 text-sm"
-                  >
-                    {SERVICES.map((item) => (
-                      <Link
-                        key={item.label}
-                        href={item.href}
-                        className="block text-gray-400 hover:text-white"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            
 
               {MOBILE_NAV_LINKS.map((item) => (
                 <Link
