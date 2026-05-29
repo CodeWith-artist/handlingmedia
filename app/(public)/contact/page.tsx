@@ -37,7 +37,7 @@ export default function ContactPage() {
           </div>
 
           <h1
-            className="font-black text-white leading-[0.88] mb-6"
+            className="font-black text-7xl text-white leading-[0.88] mb-6"
             
           >
             Let's build<br />
