@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "build": "npx prisma migrate deploy && npx prisma generate && next build",
-  "start": "next start",
-  "lint": "eslint",
-  "seed": "tsx prisma/seed.ts"
-},
+    "dev": "next dev",
+    "build": "npx prisma migrate deploy && npx prisma generate && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "seed": "tsx prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.8.0",
     "@prisma/client": "^7.8.0",
@@ -25,7 +25,8 @@
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
     "swiper": "^12.1.4",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
