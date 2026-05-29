@@ -80,15 +80,7 @@ export default function AuthForm({ mode, action }: Props) {
             </button>
           </form>
 
-          <p className="mt-6 text-center text-sm text-gray-500">
-            {isLogin ? "Don't have an account? " : "Already have an account? "}
-            <Link
-              href={isLogin ? "/register" : "/login"}
-              className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors"
-            >
-              {isLogin ? "Sign up" : "Sign in"}
-            </Link>
-          </p>
+          
         </div>
       </div>
     </div>

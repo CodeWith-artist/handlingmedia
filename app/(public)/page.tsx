@@ -11,10 +11,6 @@ export default async function Home() {
       <IntegrationsSection /> 
       <FaqSection />
       
-      
-      
-      
-     
    </>
   );
 }
