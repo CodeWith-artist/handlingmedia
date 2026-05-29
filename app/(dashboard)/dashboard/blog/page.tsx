@@ -1,8 +1,8 @@
 // app/dashboard/blog/page.tsx
 import { requireSession } from "@/lib/auth/session";
 import { getAllPostsForDashboard, getAllCategories } from "@/lib/blog/queries";
-import { canDelete } from "@/lib/blog/permissions";
-import BlogPostsTable from "@/components/blog/BlogPostsTable";
+// import { canDelete } from "@/lib/blog/permissions";
+// import BlogPostsTable from "@/components/blog/BlogPostsTable";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -36,7 +36,7 @@ export default async function BlogDashboardPage() {
         </Link>
       </div>
 
-      <BlogPostsTable posts={posts} actor={actor} />
+      {/* <BlogPostsTable posts={posts} actor={actor} /> */}
     </div>
   );
 }
