@@ -9,11 +9,12 @@ export default function PublicLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    
+    <div className="bg-black text-white">
       <Navbar />
       {children}
       <CtaBanner />
       <Footer />
-    </>
+      </div>
   );
 }

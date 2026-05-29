@@ -56,7 +56,7 @@ export default function UseCasesSection() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section ref={ref} className="py-24 px-6 border-t border-white/[0.04] bg-white/[0.01]">
+    <section ref={ref} className="py-24 px-6 border-t border-white/[0.04] bg-white/[0.01] ">
       <div className="max-w-7xl mx-auto">
 
         {/* Eyebrow */}
