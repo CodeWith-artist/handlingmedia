@@ -50,7 +50,7 @@ export function ContactForm() {
       <div className="p-8">
         <h2
           className="font-black text-white mb-1 text-2xl"
-          style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: "-0.01em" }}
+          
         >
           Tell us about your project
         </h2>
@@ -270,7 +270,7 @@ function SuccessCard() {
         </div>
         <h3
           className="font-black text-white text-3xl mb-3"
-          style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: "-0.02em" }}
+          
         >
           We got your brief!
         </h3>

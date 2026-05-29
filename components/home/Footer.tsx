@@ -50,48 +50,28 @@ export function CtaBanner() {
   return (
     <section
       ref={ref}
-      className="relative bg-[#060606] overflow-hidden py-4 border-t border-white/[0.04]"
+      className="relative bg-[#060606] overflow-hidden py-4 "
     >
       {/* Diagonal stripe texture */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage: `repeating-linear-gradient(
-            -50deg,
-            #fff 0px, #fff 1px,
-            transparent 1px, transparent 36px
-          )`,
-        }}
+        
       />
 
       {/* Intense orange core glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] rounded-full"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(249,115,22,0.18) 0%, rgba(249,115,22,0.06) 35%, transparent 65%)",
-        }}
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-225 h-125 rounded-full"
+       
       />
 
       {/* Big ghost word */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 flex items-center justify-center select-none overflow-hidden"
+        className="pointer-events-none text-[30vh] text-stroke-2 text-stroke absolute inset-0 opacity-[0.05] flex items-center justify-center select-none overflow-hidden"
       >
-        <span
-          style={{
-            fontFamily:       "'Barlow Condensed', sans-serif",
-            fontSize:         "clamp(120px, 22vw, 320px)",
-            fontWeight:       900,
-            color:            "transparent",
-            WebkitTextStroke: "1px rgba(249,115,22,0.055)",
-            letterSpacing:    "-0.04em",
-            lineHeight:       1,
-            whiteSpace:       "nowrap",
-          }}
-        >
+        <span>
           LETS GROW
         </span>
       </div>
@@ -101,12 +81,12 @@ export function CtaBanner() {
         {/* Eyebrow */}
         <div
           className="flex items-center justify-center gap-3 mb-8 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)" }}
+         
         >
           <div className="h-px w-12 bg-orange-500/60" />
           <span
             className="text-[10px] tracking-[0.3em] uppercase font-bold text-orange-500/80"
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
+            
           >
             Ready when you are
           </span>
@@ -115,21 +95,12 @@ export function CtaBanner() {
 
         {/* Headline */}
         <h2
-          className="font-black text-white mb-6 leading-[0.88] transition-all duration-700 delay-100"
-          style={{
-            fontFamily:    "'Barlow Condensed', sans-serif",
-            fontSize:      "clamp(52px, 9vw, 120px)",
-            letterSpacing: "-0.025em",
-            opacity:       visible ? 1 : 0,
-            transform:     visible ? "translateY(0)" : "translateY(20px)",
-          }}
+          className="font-black text-7xl text-white mb-6 leading-[0.88] transition-all duration-700 delay-100"
+          
         >
           Stop planning.<br />
           <span
-            style={{
-              WebkitTextStroke: "2px #f97316",
-              color:            "transparent",
-            }}
+            
           >
             Start winning.
           </span>
@@ -138,11 +109,7 @@ export function CtaBanner() {
         {/* Sub */}
         <p
           className="text-white/40 text-base md:text-lg max-w-xl mx-auto leading-relaxed mb-12 transition-all duration-700 delay-200"
-          style={{
-            fontFamily: "'DM Sans', sans-serif",
-            opacity:    visible ? 1 : 0,
-            transform:  visible ? "translateY(0)" : "translateY(16px)",
-          }}
+         
         >
           Book a free 30-minute strategy call. We'll audit your current
           marketing, map the gaps and show you exactly what we'd do differently.
@@ -151,25 +118,17 @@ export function CtaBanner() {
         {/* CTA buttons */}
         <div
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 transition-all duration-700 delay-300"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(16px)" }}
+         
         >
           <Link
             href="/contact"
-            className="group relative overflow-hidden rounded-2xl px-10 py-4 font-black text-white transition-all duration-300 hover:-translate-y-1"
-            style={{
-              background:    "#f97316",
-              fontFamily:    "'Barlow Condensed', sans-serif",
-              letterSpacing: "0.08em",
-              fontSize:      "17px",
-              boxShadow:     "0 8px 40px rgba(249,115,22,0.35), 0 0 0 1px rgba(249,115,22,0.4)",
-            }}
+            className="group relative overflow-hidden rounded-2xl px-10 py-4 font-black bg-orange-500 text-white transition-all duration-300 hover:-translate-y-1"
+            
           >
             {/* Shimmer sweep */}
             <span
               className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
-              style={{
-                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)",
-              }}
+             
             />
             <span className="relative flex items-center gap-2">
               BOOK FREE STRATEGY CALL
@@ -177,26 +136,13 @@ export function CtaBanner() {
             </span>
           </Link>
 
-          <Link
-            href="/portfolio"
-            className="rounded-2xl px-10 py-4 font-black transition-all duration-200 hover:-translate-y-0.5"
-            style={{
-              fontFamily:    "'Barlow Condensed', sans-serif",
-              letterSpacing: "0.08em",
-              fontSize:      "17px",
-              color:         "rgba(255,255,255,0.45)",
-              border:        "0.5px solid rgba(255,255,255,0.12)",
-              background:    "rgba(255,255,255,0.03)",
-            }}
-          >
-            SEE OUR WORK
-          </Link>
+          
         </div>
 
         {/* Trust row */}
         <div
           className="flex flex-wrap items-center justify-center gap-6 transition-all duration-700 delay-400"
-          style={{ opacity: visible ? 1 : 0 }}
+         
         >
           {[
             "✦ Free 30-min call",
@@ -207,7 +153,7 @@ export function CtaBanner() {
             <span
               key={t}
               className="text-xs text-white/25"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              
             >
               {t}
             </span>
@@ -215,9 +161,7 @@ export function CtaBanner() {
         </div>
       </div>
 
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap');
-      `}</style>
+     
     </section>
   );
 }
@@ -231,24 +175,21 @@ export function Footer() {
 
   return (
     <footer
-      className="relative bg-[#030303] border-t overflow-hidden"
-      style={{ borderColor: "rgba(255,255,255,0.05)" }}
+      className="relative bg-[#030303] border-t overflow-hidden border-white/9"
+      
     >
       {/* Subtle top glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px]"
-        style={{
-          background:
-            "radial-gradient(ellipse at center top, rgba(249,115,22,0.06) 0%, transparent 70%)",
-        }}
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-150 h-50"
+       
       />
 
       <div className="relative max-w-6xl mx-auto px-6">
 
         {/* ── Top: brand + nav cols ── */}
-        <div className="pt-16 pb-12 grid grid-cols-2 md:grid-cols-6 gap-10 border-b"
-          style={{ borderColor: "rgba(255,255,255,0.05)" }}
+        <div className="pt-16 pb-12 grid grid-cols-2 md:grid-cols-6 gap-10 border-b border-white/6"
+         
         >
           {/* Brand col — spans 2 on md */}
           <div className="col-span-2 md:col-span-2">
@@ -257,41 +198,12 @@ export function Footer() {
 
             <p
               className="text-sm text-white/30 leading-relaxed mb-6 max-w-xs"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
+             
             >
               Full-service digital agency helping Indian brands grow through WhatsApp automation, custom development and performance marketing.
             </p>
 
-            {/* Socials */}
-            {/* <div className="flex items-center gap-3">
-              {SOCIALS.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:-translate-y-0.5"
-                  style={{
-                    background:  "rgba(255,255,255,0.04)",
-                    border:      "0.5px solid rgba(255,255,255,0.08)",
-                    color:       "rgba(255,255,255,0.35)",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(249,115,22,0.12)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(249,115,22,0.4)";
-                    (e.currentTarget as HTMLElement).style.color = "#f97316";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.04)";
-                    (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.08)";
-                    (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.35)";
-                  }}
-                >
-                  <s.icon />
-                </a>
-              ))}
-            </div> */}
+           
           </div>
 
           {/* Nav cols */}
@@ -299,7 +211,7 @@ export function Footer() {
             <div key={col.heading} className="col-span-1">
               <p
                 className="text-[10px] font-bold uppercase tracking-widest text-white/25 mb-4"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
+                
               >
                 {col.heading}
               </p>
@@ -309,7 +221,7 @@ export function Footer() {
                     <Link
                       href={link.href}
                       className="text-sm text-white/35 hover:text-orange-400 transition-colors duration-150"
-                      style={{ fontFamily: "'DM Sans', sans-serif" }}
+                      
                     >
                       {link.label}
                     </Link>
@@ -322,25 +234,25 @@ export function Footer() {
 
         {/* ── Middle: contact strip ── */}
         <div
-          className="py-8 grid grid-cols-1 md:grid-cols-3 gap-6 border-b"
-          style={{ borderColor: "rgba(255,255,255,0.05)" }}
+          className="py-8 grid grid-cols-1 md:grid-cols-3 gap-6 border-b border-white/6"
+          
         >
           {[
-            { icon: "✉", label: "Email us", value: "hello@handlingmedia.com", href: "mailto:hello@handlingmedia.com" },
-            { icon: "📞", label: "Call us",  value: "+91 98765 43210",         href: "tel:+919876543210"             },
+            { icon: "✉", label: "Email us", value: "creator@handlingmedia.com", href: "mailto:creator@handlingmedia.com" },
+            { icon: "📞", label: "Call us",  value: "+91 9205606143",         href: "tel:+919205606143"             },
             { icon: "📍", label: "Based in", value: "India · Remote-first",   href: null                            },
           ].map((item) => (
-            <div key={item.label} className="flex items-start gap-3">
+            <div key={item.label} className="flex items-start gap-3 ">
               <span
-                className="text-lg flex-shrink-0 mt-0.5"
-                style={{ filter: "grayscale(0.3)" }}
+                className="text-lg shrink-0 mt-0.5 "
+                
               >
                 {item.icon}
               </span>
               <div>
                 <p
                   className="text-[10px] uppercase tracking-widest text-white/20 mb-1"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}
+                 
                 >
                   {item.label}
                 </p>
@@ -348,14 +260,14 @@ export function Footer() {
                   <a
                     href={item.href}
                     className="text-sm text-white/50 hover:text-orange-400 transition-colors duration-150"
-                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                   
                   >
                     {item.value}
                   </a>
                 ) : (
                   <p
                     className="text-sm text-white/50"
-                    style={{ fontFamily: "'DM Sans', sans-serif" }}
+                   
                   >
                     {item.value}
                   </p>
@@ -369,22 +281,20 @@ export function Footer() {
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p
             className="text-xs text-white/18"
-            style={{ fontFamily: "'DM Sans', sans-serif" }}
+           
           >
             © {year} handlingmedia. All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">
             {[
-              { label: "Privacy Policy", href: "/privacy"  },
-              { label: "Terms of Service", href: "/terms" },
-              { label: "Sitemap",         href: "/sitemap.xml" },
+              { label: "Privacy Policy", href: "/privacy-policy"  },
             ].map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 className="text-xs text-white/18 hover:text-white/50 transition-colors duration-150"
-                style={{ fontFamily: "'DM Sans', sans-serif" }}
+                
               >
                 {l.label}
               </Link>
@@ -398,7 +308,7 @@ export function Footer() {
             />
             <span
               className="text-xs text-white/20"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
+              
             >
               Accepting new clients
             </span>

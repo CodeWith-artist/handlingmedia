@@ -51,7 +51,7 @@ export default function FaqSection() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section ref={ref} className="py-24 px-6 border-t border-white/[0.04]">
+    <section ref={ref} className="py-24 px-6 border-t border-white/4">
       <div className="max-w-6xl mx-auto">
 
         {/* Eyebrow */}
@@ -63,8 +63,7 @@ export default function FaqSection() {
 
         {/* Heading */}
         <h2
-          className={`font-black text-white text-center leading-[0.9] mb-4 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
-          style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "clamp(38px,5.5vw,68px)", letterSpacing: "-0.025em" }}
+          className={`font-black text-white text-4xl text-center leading-[0.9] mb-4 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
         >
           Frequently asked<br />
           <span className="text-orange-500">questions.</span>
@@ -78,9 +77,9 @@ export default function FaqSection() {
         {/* Stats bar */}
         <div className={`grid grid-cols-2 md:grid-cols-4 gap-3 mb-12 transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
           {STATS.map((s) => (
-            <div key={s.label} className="rounded-xl bg-white/[0.03] border border-white/[0.07] p-4 text-center">
-              <p className="font-black text-orange-500 leading-none mb-1.5"
-                style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "22px", letterSpacing: "-0.02em" }}>
+            <div key={s.label} className="rounded-xl bg-white/3 border border-white/[0.07] p-4 text-center">
+              <p className="font-black text-orange-500 leading-none mb-1.5">
+               
                 {s.value}
               </p>
               <p className="text-[10px] text-white/30 leading-tight">{s.label}</p>
@@ -95,8 +94,8 @@ export default function FaqSection() {
               key={i}
               className={`rounded-2xl border overflow-hidden transition-all duration-300 cursor-pointer
                 ${open === i
-                  ? "border-orange-500/30 bg-orange-500/[0.04]"
-                  : "border-white/[0.06] bg-white/[0.02] hover:border-white/10"
+                  ? "border-orange-500/30 bg-orange-500/2"
+                  : "border-white/6 bg-white/2 hover:border-white/10"
                 }
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
               style={{ transitionDelay: `${i * 80 + 300}ms` }}
@@ -105,10 +104,10 @@ export default function FaqSection() {
               {/* Question row */}
               <div className="flex items-center justify-between px-5 py-4 gap-4">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0 transition-all duration-300
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center text-base shrink-0 transition-all duration-300
                     ${open === i
                       ? "bg-orange-500/20 border border-orange-500/40 scale-110 -rotate-3"
-                      : "bg-white/[0.04] border border-white/[0.08]"
+                      : "bg-white/3 border border-white/8"
                     }`}>
                     {faq.icon}
                   </div>
@@ -117,7 +116,7 @@ export default function FaqSection() {
                     {faq.q}
                   </p>
                 </div>
-                <span className={`text-orange-500 text-xl font-black flex-shrink-0 transition-transform duration-300
+                <span className={`text-orange-500 text-xl font-black shrink-0 transition-transform duration-300
                   ${open === i ? "rotate-45" : "rotate-0"}`}>
                   +
                 </span>
@@ -126,7 +125,7 @@ export default function FaqSection() {
               {/* Answer */}
               <div className={`overflow-hidden transition-all duration-300 ${open === i ? "max-h-56" : "max-h-0"}`}>
                 <p className="px-5 pb-5 text-sm text-white/40 leading-relaxed
-                  border-t border-white/[0.05] pt-4">
+                  border-t border-white/5 pt-4">
                   {faq.a}
                 </p>
               </div>
@@ -140,9 +139,8 @@ export default function FaqSection() {
           <Link
             href="/contact"
             className="group relative overflow-hidden inline-flex items-center gap-2 rounded-xl px-8 py-3.5 font-black text-white bg-orange-500 hover:bg-orange-600 hover:-translate-y-0.5 transition-all duration-200 shadow-[0_6px_28px_rgba(249,115,22,0.3)]"
-            style={{ fontFamily: "'Barlow Condensed',sans-serif", letterSpacing: "0.08em", fontSize: "15px" }}
           >
-            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-linear-to-r from-transparent via-white/15 to-transparent" />
             <span className="relative">TALK TO OUR TEAM</span>
             <span className="relative transition-transform duration-200 group-hover:translate-x-1">→</span>
           </Link>

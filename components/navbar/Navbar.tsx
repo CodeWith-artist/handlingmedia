@@ -96,7 +96,7 @@ export default function Navbar() {
               <FaBars />
             </button>
 
-            {/* <Login /> */}
+            <Login />
            
           </div>
         </motion.nav>

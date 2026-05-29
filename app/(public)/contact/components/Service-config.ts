@@ -1,17 +1,7 @@
 const SERVICES = [
   { value: "",                              label: "Select a service…"              },
   { value: "whatsapp-business-api",         label: "WhatsApp Business API"          },
-  { value: "web-development",               label: "Custom Website Development"     },
-  { value: "app-development",               label: "Mobile App Development"         },
-  { value: "shopify-development",           label: "Shopify Development"            },
-  { value: "wordpress-development",         label: "WordPress Development"          },
-  { value: "ui-ux-design",                  label: "UI / UX Design"                 },
-  { value: "crm-automation",                label: "CRM & Automation"               },
-  { value: "ecommerce",                     label: "E-commerce Solutions"           },
-  { value: "booking-systems",               label: "Booking & Appointment Systems"  },
-  { value: "chatbot-automation",            label: "Chatbot Automation"             },
-  { value: "crm-integration",               label: "CRM Integration"                },
-  { value: "not-sure",                      label: "Not sure yet — need guidance"   },
+ 
 ];
 
 const BUDGETS = [
@@ -36,14 +26,14 @@ const CONTACT_INFO = [
   {
     icon: "✉",
     label: "Email us",
-    value: "hello@handlingmedia.com",
-    href:  "mailto:hello@handlingmedia.com",
+    value: "creator@handlingmedia.com",
+    href:  "mailto:creator@handlingmedia.com",
   },
   {
     icon: "📞",
     label: "Call us",
-    value: "+91 98765 43210",
-    href:  "tel:+919876543210",
+    value: "+91 9205606143",
+    href:  "tel:+919205606143",
   },
   {
     icon: "⚡",

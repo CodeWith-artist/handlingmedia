@@ -45,7 +45,7 @@ export default function IntegrationsSection() {
     : INTEGRATIONS.filter((i) => i.cat === active);
 
   return (
-    <section ref={ref} className="py-24 px-6 bg-white/[0.01] border-t border-white/[0.04]">
+    <section ref={ref} className="py-24 px-6 bg-white/1 border-t border-white/4">
       <div className="max-w-7xl mx-auto">
 
         {/* Eyebrow */}
@@ -57,8 +57,8 @@ export default function IntegrationsSection() {
 
         {/* Heading */}
         <h2
-          className={`font-black text-white text-center leading-[0.9] mb-4 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
-          style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "clamp(38px,5.5vw,68px)", letterSpacing: "-0.025em" }}
+          className={`font-black text-white text-4xl text-center leading-[0.9] mb-4 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          
         >
           Seamlessly integrate with<br />
           <span className="text-orange-500">your favorite tools.</span>
@@ -72,9 +72,9 @@ export default function IntegrationsSection() {
         {/* Stats bar */}
         <div className={`flex flex-wrap items-center justify-center gap-4 mb-10 transition-all duration-700 delay-300 ${visible ? "opacity-100" : "opacity-0"}`}>
           {STATS.map((s) => (
-            <div key={s.label} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.07]">
-              <span className="font-black text-orange-500 text-base"
-                style={{ fontFamily: "'Barlow Condensed',sans-serif", letterSpacing: "-0.01em" }}>
+            <div key={s.label} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/3 border border-white/[0.07]">
+              <span className="font-black text-orange-500 text-base">
+                
                 {s.value}
               </span>
               <span className="text-xs text-white/35">{s.label}</span>
@@ -91,7 +91,7 @@ export default function IntegrationsSection() {
               className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200
                 ${active === cat
                   ? "bg-orange-500/20 border border-orange-500/40 text-orange-400"
-                  : "bg-white/[0.03] border border-white/[0.07] text-white/35 hover:border-white/15 hover:text-white/55"
+                  : "bg-white/3 border border-white/[0.07] text-white/35 hover:border-white/15 hover:text-white/55"
                 }`}
             >
               {cat}
@@ -105,7 +105,7 @@ export default function IntegrationsSection() {
             <div
               key={item.name}
               className={`group flex flex-col items-center gap-2.5 py-5 px-3 rounded-2xl
-                border ${item.border} bg-gradient-to-b ${item.glow} to-white/[0.01]
+                border ${item.border} bg-linear-to-b ${item.glow} to-white/1
                 hover:-translate-y-1 transition-all duration-300 cursor-default
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
               style={{ transitionDelay: `${i * 40 + 300}ms` }}
@@ -113,8 +113,8 @@ export default function IntegrationsSection() {
               <span className="text-3xl transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
                 {item.icon}
               </span>
-              <span className="text-xs font-bold text-white/70 text-center leading-tight"
-                style={{ fontFamily: "'Barlow Condensed',sans-serif", letterSpacing: "0.02em", fontSize: "13px" }}>
+              <span className="text-xs font-bold text-white/70 text-center leading-tight">
+                
                 {item.name}
               </span>
               <span className="text-[10px] text-white/25">{item.cat}</span>

@@ -56,7 +56,7 @@ export default function UseCasesSection() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section ref={ref} className="py-24 px-6 border-t border-white/[0.04] bg-white/[0.01] ">
+    <section ref={ref} className="py-24 px-6 border-t border-white/4 bg-white/1">
       <div className="max-w-7xl mx-auto">
 
         {/* Eyebrow */}
@@ -70,8 +70,8 @@ export default function UseCasesSection() {
 
         {/* Heading */}
         <h2
-          className={`font-black text-white text-center leading-[0.9] mb-5 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
-          style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "clamp(40px,6vw,72px)", letterSpacing: "-0.025em" }}
+          className={`font-black text-white text-4xl text-center leading-[0.9] mb-5 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"}`}
+          
         >
           Use <span className="text-orange-500">Cases</span>
         </h2>
@@ -88,17 +88,17 @@ export default function UseCasesSection() {
             <button
               key={uc.title}
               onClick={() => setActive(active === i ? null : i)}
-              className={`group text-left relative rounded-2xl border bg-gradient-to-b ${uc.glow} to-white/[0.01]
+              className={`group text-left relative rounded-2xl border bg-linear-to-b ${uc.glow} to-white/1
                 p-7 transition-all duration-300 overflow-hidden
                 ${active === i
                   ? `${uc.border} border-2 -translate-y-1 shadow-[0_8px_32px_rgba(249,115,22,0.1)]`
-                  : `border-white/[0.06] hover:${uc.border} hover:-translate-y-1`
+                  : `border-white/6 hover:${uc.border} hover:-translate-y-1`
                 }
                 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
               style={{ transitionDelay: `${i * 80 + 200}ms` }}
             >
               {/* Top bar on active */}
-              <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-orange-500/60 to-transparent transition-opacity duration-300 ${active === i ? "opacity-100" : "opacity-0"}`} />
+              <div className={`absolute top-0 left-0 right-0 h-2 bg-linear-to-r from-transparent via-orange-500/60 to-transparent transition-opacity duration-300 ${active === i ? "opacity-100" : "opacity-0"}`} />
 
               {/* Badge */}
               {uc.badge && (
@@ -111,8 +111,8 @@ export default function UseCasesSection() {
                 {uc.icon}
               </span>
 
-              <h3 className="font-black text-white mb-3 leading-tight"
-                style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "21px", letterSpacing: "-0.01em" }}>
+              <h3 className="font-black text-white mb-3 leading-tight">
+                
                 {uc.title}
               </h3>
               <p className="text-sm text-white/40 leading-relaxed mb-5">{uc.desc}</p>

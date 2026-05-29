@@ -38,11 +38,7 @@ export default function ContactPage() {
 
           <h1
             className="font-black text-white leading-[0.88] mb-6"
-            style={{
-              fontFamily:    "'Barlow Condensed', sans-serif",
-              fontSize:      "clamp(52px, 9vw, 110px)",
-              letterSpacing: "-0.025em",
-            }}
+            
           >
             Let's build<br />
             something{" "}
@@ -111,7 +107,7 @@ export default function ContactPage() {
             <div className="p-5 rounded-2xl bg-orange-500/5 border border-orange-500/20">
               <p
                 className="font-black text-white mb-3 text-lg"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif", letterSpacing: "-0.01em" }}
+                
               >
                 Why handlingmedia?
               </p>
