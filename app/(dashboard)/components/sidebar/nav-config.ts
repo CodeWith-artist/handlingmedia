@@ -90,6 +90,37 @@ export const navConfig: NavGroup[] = [
         ],
       },
     ],
+  },
+  {
+    groupLabel: "Media",
+    items: [
+      {
+        id: "media",
+        label: "Media",
+        icon: "Users",
+        href: "/dashboard/media",
+        role: ["ADMIN"],
+        children: [
+          
+          {
+            id: "allmedia",
+            label: "All Media",
+            icon: "PlusCircle",
+            href: "/dashboard/media/allmedia",
+            role: ["ADMIN"],
+          },
+          {
+            id: "uploadmedia",
+            label: "Upload Media",
+            icon: "PlusCircle",
+            href: "/dashboard/media",
+            role: ["ADMIN"],
+          },
+          
+        ],
+      },
+    ],
   }
+
     
 ];
