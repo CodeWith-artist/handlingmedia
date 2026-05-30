@@ -43,9 +43,9 @@ export function ContactForm() {
     }`;
 
   return (
-    <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden">
+    <div className="rounded-2xl border border-white/[0.07] bg-white/2 overflow-hidden">
       {/* Top accent bar */}
-      <div className="h-[3px] bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
+      <div className="h-0.75 bg-linear-to-r from-transparent via-orange-500 to-transparent" />
 
       <div className="p-8">
         <h2
@@ -171,8 +171,8 @@ export function ContactForm() {
                 <label
                   key={src}
                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg cursor-pointer
-                    border border-white/[0.07] bg-white/[0.02]
-                    hover:border-orange-500/30 hover:bg-orange-500/[0.04]
+                    border border-white/[0.07] bg-white/2
+                    hover:border-orange-500/30 hover:bg-orange-500/3
                     transition-all duration-150 group"
                 >
                   <input
@@ -201,7 +201,7 @@ export function ContactForm() {
           >
             <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full
               transition-transform duration-700 ease-in-out
-              bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+              bg-linear-to-r from-transparent via-white/15 to-transparent" />
             <span className="relative flex items-center justify-center gap-2">
               {pending ? (
                 <>
@@ -260,8 +260,8 @@ function Field({
 
 function SuccessCard() {
   return (
-    <div className="rounded-2xl border border-green-500/25 bg-green-500/[0.04] overflow-hidden">
-      <div className="h-[3px] bg-gradient-to-r from-transparent via-green-500 to-transparent" />
+    <div className="rounded-2xl border border-green-500/25 bg-green-500/4 overflow-hidden">
+      <div className="h-0.75 bg-linear-to-r from-transparent via-green-500 to-transparent" />
       <div className="p-12 text-center">
         <div className="w-16 h-16 rounded-full bg-green-500/15 border border-green-500/30
           flex items-center justify-center mx-auto mb-6 text-3xl

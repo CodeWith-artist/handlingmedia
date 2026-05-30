@@ -3,6 +3,8 @@
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { Logo } from "../navbar/Logo";
+import{ Phone} from "lucide-react";
+import { MdEmail } from "react-icons/md";
 
 
 // ── footer nav data ───────────────────────────────────────────
@@ -200,7 +202,7 @@ export function Footer() {
               className="text-sm text-white/30 leading-relaxed mb-6 max-w-xs"
              
             >
-              Full-service digital agency helping Indian brands grow through WhatsApp automation, custom development and performance marketing.
+              Automation is the future. Those who innovate, automate, and evolve will lead.
             </p>
 
            
@@ -238,16 +240,15 @@ export function Footer() {
           
         >
           {[
-            { icon: "✉", label: "Email us", value: "creator@handlingmedia.com", href: "mailto:creator@handlingmedia.com" },
-            { icon: "📞", label: "Call us",  value: "+91 9205606143",         href: "tel:+919205606143"             },
-            { icon: "📍", label: "Based in", value: "India · Remote-first",   href: null                            },
+            { icon: MdEmail, label: "Email us", value: "info@handlingmedia.io", href: "mailto:info@handlingmedia.io" },
+            { icon: Phone, label: "Call us",  value: "+91 9205606143",         href: "tel:+919205606143"             },
           ].map((item) => (
             <div key={item.label} className="flex items-start gap-3 ">
               <span
                 className="text-lg shrink-0 mt-0.5 "
                 
               >
-                {item.icon}
+                {typeof item.icon === "string" ? item.icon : <item.icon size={20} fill="#f97316" />}
               </span>
               <div>
                 <p

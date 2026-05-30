@@ -3,10 +3,11 @@
 
 import { useState, useRef } from "react";
 import { useInView } from "@/hook/useInView"; // your existing hook
+import {ShoppingBag, Utensils , BriefcaseBusiness , Megaphone , FileSpreadsheet ,Bot} from "lucide-react";
 
 const USE_CASES = [
   {
-    icon: "🛒",
+    icon: ShoppingBag,
     title: "E-commerce & Retail",
     desc: "Automate product recommendations, order status updates, and abandoned cart recovery on WhatsApp.",
     tags: ["Order updates", "Cart recovery", "Recommendations"],
@@ -14,35 +15,35 @@ const USE_CASES = [
     border: "border-amber-500/25", glow: "from-amber-500/10",
   },
   {
-    icon: "🍽️",
+    icon: Utensils,
     title: "Restaurants & Food Service",
     desc: "Automate table reservations, online orders, menu inquiries, and customer feedback on WhatsApp and Instagram.",
     tags: ["Table booking", "Menu inquiries", "Feedback"],
     border: "border-orange-500/20", glow: "from-orange-500/10",
   },
   {
-    icon: "💼",
+    icon: BriefcaseBusiness,
     title: "Service Businesses",
     desc: "Schedule appointments, send reminders, and handle frequently asked questions automatically.",
     tags: ["Appointments", "Auto-reminders", "FAQ handling"],
     border: "border-blue-500/20", glow: "from-blue-500/10",
   },
   {
-    icon: "📣",
+    icon: Megaphone,
     title: "Lead Generation",
     desc: "Qualify leads and engage prospects with personalized automation sequences.",
     tags: ["Lead qualification", "Drip sequences", "Engagement"],
     border: "border-purple-500/20", glow: "from-purple-500/10",
   },
   {
-    icon: "📊",
+    icon: FileSpreadsheet,
     title: "Analytics & Insights",
     desc: "Track customer engagement, conversion rates, and campaign performance in real-time.",
     tags: ["Real-time tracking", "Conversion rates", "Campaigns"],
     border: "border-teal-500/20", glow: "from-teal-500/10",
   },
   {
-    icon: "🤖",
+    icon: Bot,
     title: "Custom AI Solutions",
     desc: "Build domain-specific AI agents trained for Instagram, Messenger, WhatsApp and your website.",
     tags: ["Custom AI agents", "Multi-channel", "Domain training"],
@@ -108,7 +109,7 @@ export default function UseCasesSection() {
               )}
 
               <span className={`text-4xl mb-5 block transition-transform duration-300 ${active === i ? "scale-110 -rotate-3" : "group-hover:scale-110 group-hover:-rotate-3"}`}>
-                {uc.icon}
+                <uc.icon fill={active === i ? "#f97316" : "#fff"} stroke={active === i ? "#fff" : "#f97316"} />
               </span>
 
               <h3 className="font-black text-white mb-3 leading-tight">

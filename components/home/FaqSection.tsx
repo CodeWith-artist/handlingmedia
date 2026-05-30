@@ -4,35 +4,36 @@
 import { useRef, useState } from "react";
 import { useInView } from "@/hook/useInView";
 import Link from "next/link";
+import{ Cloud , Hammer ,Infinity, AlarmClock , Flashlight , Sprout } from "lucide-react";
 
 const FAQS = [
   {
-    icon: "💬",
+    icon: Cloud,
     q: "How does your AI WhatsApp automation work?",
     a: "Our AI WhatsApp automation works by integrating with the WhatsApp Business API. We train a custom AI agent on your business data, products, and common customer inquiries. This agent then handles customer conversations, provides information, captures leads, and processes orders automatically, 24/7.",
   },
   {
-    icon: "🛠️",
+    icon: Hammer,
     q: "Do I need technical knowledge to use your DIY platform?",
     a: "No technical knowledge is required. Our DIY platform has a user-friendly interface with drag-and-drop builders, pre-made templates, and guided setup wizards. You can build and deploy WhatsApp automations without coding experience.",
   },
   {
-    icon: "🔀",
+    icon: Infinity,
     q: "What's the difference between your DIY and DFY options?",
     a: "DIY (Do It Yourself) gives you access to our platform with a subscription, allowing you to build and manage your own automations. DFY (Done For You) is a full-service option where our team builds, trains, and manages the AI agents for your business, handling everything from setup to optimization.",
   },
   {
-    icon: "⏱️",
+    icon: AlarmClock,
     q: "How long does it take to implement your solution?",
     a: "For DIY solutions, you can be up and running within hours using our templates. For DFY solutions, implementation typically takes 1–2 weeks, depending on complexity. This includes discovery, AI training, integration setup, testing, and deployment.",
   },
   {
-    icon: "🔌",
+    icon: Flashlight,
     q: "Can you integrate with our existing CRM or e-commerce platform?",
     a: "Yes, we integrate with 25+ popular platforms including Shopify, WooCommerce, HubSpot, Salesforce, and more. Our API also allows for custom integrations with proprietary systems if needed.",
   },
   {
-    icon: "📈",
+    icon: Sprout,
     q: "What kind of results can I expect?",
     a: "Our clients typically see a 30–40% increase in lead conversion rates, 60% reduction in response times, 25–35% increase in customer satisfaction scores, and significant time savings for their teams. Specific results vary by industry and use case.",
   },
@@ -109,7 +110,7 @@ export default function FaqSection() {
                       ? "bg-orange-500/20 border border-orange-500/40 scale-110 -rotate-3"
                       : "bg-white/3 border border-white/8"
                     }`}>
-                    {faq.icon}
+                    <faq.icon size={18} style={{ color: open === i ? "#f97316" : "#ffffff" }} />
                   </div>
                   <p className={`font-semibold text-sm leading-snug transition-colors duration-200
                     ${open === i ? "text-white" : "text-white/55"}`}>

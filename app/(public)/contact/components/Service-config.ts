@@ -1,6 +1,10 @@
+import { Phone, Zap } from "lucide-react";
+import { MdEmail } from "react-icons/md";
+
 const SERVICES = [
   { value: "",                              label: "Select a service…"              },
-  { value: "whatsapp-business-api",         label: "WhatsApp Business API"          },
+  { value: "whatsapp-panel-for-restaurants",         label: "All-in-One WhatsApp Panel for Restaurant Management"          },
+  { value: "whatsapp-ai-agent-for-brands",         label: "WhatsApp AI Agent for D2C Brands & Businesses"          },
  
 ];
 
@@ -24,19 +28,19 @@ const TIMELINES = [
 
 const CONTACT_INFO = [
   {
-    icon: "✉",
+    icon: MdEmail,
     label: "Email us",
-    value: "creator@handlingmedia.com",
-    href:  "mailto:creator@handlingmedia.com",
+    value: "info@handlingmedia.io",
+    href:  "mailto:info@handlingmedia.io",
   },
   {
-    icon: "📞",
+    icon: Phone,
     label: "Call us",
     value: "+91 9205606143",
     href:  "tel:+919205606143",
   },
   {
-    icon: "⚡",
+    icon: Zap,
     label: "Response time",
     value: "Within 4 hours",
     href:  null,

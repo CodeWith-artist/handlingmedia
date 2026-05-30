@@ -1,6 +1,8 @@
 
+import { NavItem } from "@/app/(dashboard)/components/sidebar/NavItem";
 import { ContactForm } from "./components/Form";
 import { CONTACT_INFO } from "./components/Service-config";
+import { Icon , Check } from "lucide-react";
 
 
 export default function ContactPage() {
@@ -83,7 +85,7 @@ export default function ContactPage() {
                   hover:border-orange-500/25 hover:bg-orange-500/4
                   transition-all duration-200 group"
               >
-                <span className="text-xl shrink-0 mt-0.5">{item.icon}</span>
+                <span className="text-xl shrink-0 mt-0.5">{item.icon ? <item.icon size={20} fill="#f97316" /> : null}</span>
                 <div>
                   <p className="text-[10px] uppercase tracking-widest text-white/22 mb-1">
                     {item.label}
@@ -121,7 +123,7 @@ export default function ContactPage() {
                   <div key={point} className="flex items-start gap-2.5">
                     <span className="w-4 h-4 rounded-full bg-orange-500/20 border border-orange-500/40
                       flex items-center justify-center text-orange-400 text-[9px] font-black shrink-0 mt-0.5">
-                      ✓
+                      <Check size={10} />
                     </span>
                     <span className="text-xs text-white/50 leading-relaxed">{point}</span>
                   </div>

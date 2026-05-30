@@ -263,7 +263,7 @@ export default function PrivacyPolicyPage() {
               <p>
                 <strong>Handling Media</strong>
               </p>
-              <p>Email: creator@handlingmedia.com</p>
+              <p>Email: info@handlingmedia.com</p>
               <p>Phone: +91 9205606143</p>
               <p>Address: remote gurugram, Haryana</p>
               <p>Website: www.handlingmedia.io</p>
