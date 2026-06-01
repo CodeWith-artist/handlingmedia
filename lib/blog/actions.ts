@@ -50,66 +50,78 @@ export async function createPostAction(
   _prev: BlogResult,
   formData: FormData
 ): Promise<BlogResult> {
-  const actor = await requireBlogActor();
-  if (!canCreate(actor)) return { success: false, error: "Permission denied." };
+   try {
+        const actor = await requireBlogActor();
+        if (!canCreate(actor)) return { success: false, error: "Permission denied." };
 
-  const raw = Object.fromEntries(formData.entries());
-  const parsed = PostSchema.safeParse(raw);
+        const raw = Object.fromEntries(formData.entries());
+        const parsed = PostSchema.safeParse(raw);
 
-  if (!parsed.success) {
-    return {
+        if (!parsed.success) {
+          return {
+            success: false,
+            error: "Validation failed",
+            fields: parsed.error.flatten().fieldErrors,
+          };
+        }
+
+        const { title, excerpt, content, coverImage, metaTitle, metaDescription, categories, tags } =
+          parsed.data;
+
+        const baseSlug = parsed.data.slug || slugify(title);
+        // Ensure unique slug
+        const existingCount = await prisma.post.count({ where: { slug: { startsWith: baseSlug } } });
+        const slug = existingCount === 0 ? baseSlug : `${baseSlug}-${existingCount}`;
+
+        // Upsert tags by name
+        const tagNames = tags ? tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
+        const tagRecords = await Promise.all(
+          tagNames.map((name) =>
+            prisma.tag.upsert({
+              where: { slug: slugify(name) },
+              create: { name, slug: slugify(name) },
+              update: {},
+            })
+          )
+        );
+
+        const categoryIds = categories
+          ? categories.split(",").map((c) => c.trim()).filter(Boolean)
+          : [];
+
+        const post = await prisma.post.create({
+          data: {
+            title,
+            slug,
+            excerpt,
+            content,
+            coverImage: coverImage || null,
+            metaTitle,
+            metaDescription,
+            authorId: actor.userId,
+            status: "DRAFT",
+            categories: {
+              create: categoryIds.map((id) => ({ categoryId: id })),
+            },
+            tags: {
+              create: tagRecords.map((t) => ({ tagId: t.id })),
+            },
+          },
+        });
+
+        revalidatePath("/dashboard/blog");
+        return { success: true, postId: post.id, message: "Post created successfully." };
+  } catch (error) {
+  console.error("Error creating post:", error);
+   return {
       success: false,
-      error: "Validation failed",
-      fields: parsed.error.flatten().fieldErrors,
+      error:
+        error instanceof Error
+          ? error.message
+          : "Failed to create post",
     };
-  }
+}
 
-  const { title, excerpt, content, coverImage, metaTitle, metaDescription, categories, tags } =
-    parsed.data;
-
-  const baseSlug = parsed.data.slug || slugify(title);
-  // Ensure unique slug
-  const existingCount = await prisma.post.count({ where: { slug: { startsWith: baseSlug } } });
-  const slug = existingCount === 0 ? baseSlug : `${baseSlug}-${existingCount}`;
-
-  // Upsert tags by name
-  const tagNames = tags ? tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
-  const tagRecords = await Promise.all(
-    tagNames.map((name) =>
-      prisma.tag.upsert({
-        where: { slug: slugify(name) },
-        create: { name, slug: slugify(name) },
-        update: {},
-      })
-    )
-  );
-
-  const categoryIds = categories
-    ? categories.split(",").map((c) => c.trim()).filter(Boolean)
-    : [];
-
-  const post = await prisma.post.create({
-    data: {
-      title,
-      slug,
-      excerpt,
-      content,
-      coverImage: coverImage || null,
-      metaTitle,
-      metaDescription,
-      authorId: actor.userId,
-      status: "DRAFT",
-      categories: {
-        create: categoryIds.map((id) => ({ categoryId: id })),
-      },
-      tags: {
-        create: tagRecords.map((t) => ({ tagId: t.id })),
-      },
-    },
-  });
-
-  revalidatePath("/dashboard/blog");
-  return { success: true, postId: post.id, message: "Post created successfully." };
 }
 
 // ── Update Post ───────────────────────────────────────────────

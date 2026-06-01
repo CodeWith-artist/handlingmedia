@@ -2,6 +2,8 @@
 import { getPostBySlug } from "@/lib/blog/queries";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     const { slug } = await params;
@@ -46,10 +48,35 @@ export default async function PostPage({ params }: { params: { slug: string } })
         </span>
       </div>
       {/* Render content — use a proper MD library like marked/remark in production */}
-      <div
-        className="prose prose-invert prose-lg max-w-none"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+      <div className="prose prose-invert max-w-none p-5 min-h-125">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      img: ({ ...props }) => (
+                        <img
+                          {...props}
+                          className="rounded-xl w-full my-4"
+                          alt={props.alt || ""}
+                        />
+                      ),
+                      a: ({ ...props }) => (
+                        <a
+                          {...props}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-indigo-400 hover:text-indigo-300"
+                        />
+                      ),
+                      code: ({ children }) => (
+                        <code className="bg-gray-800 px-1 py-0.5 rounded">
+                          {children}
+                        </code>
+                      ),
+                    }}
+                  >
+                    {post.content}
+                  </ReactMarkdown>
+                </div>
       <div className="mt-10 flex flex-wrap gap-2">
         {post.tags.map(({ tag }) => (
           <span key={tag.name} className="text-xs px-2.5 py-1 bg-gray-800 text-gray-400 rounded-full">

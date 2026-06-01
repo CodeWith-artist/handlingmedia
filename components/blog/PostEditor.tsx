@@ -4,6 +4,8 @@
 import { useActionState, useState } from "react";
 import type { BlogResult } from "@/lib/blog/actions";
 import { Category } from "@/generated/prisma/client";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Props {
   action: (_prev: BlogResult, formData: FormData) => Promise<BlogResult>;
@@ -22,6 +24,19 @@ interface Props {
 }
 
 const initial: BlogResult = { success: true };
+
+const toolbar = [
+  ["B", "**bold text**"],
+  ["I", "*italic text*"],
+  ["Code", "`code`"],
+  ["H1", "# Heading"],
+  ["H2", "## Heading"],
+  ["Link", "[Link Text](https://example.com)"],
+  ["Img", "![Alt Text](https://example.com/image.jpg)"],
+  ["Quote", "> Quote"],
+  ["List", "\n- Item 1\n- Item 2"],
+  ["Table", "\n| Name | Age |\n|------|-----|\n| John | 25 |"],
+]
 
 export default function PostEditor({ action, categories, defaultValues = {} }: Props) {
   const [state, formAction, pending] = useActionState(action, initial);
@@ -46,16 +61,7 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
   }
 
   // Simple markdown → HTML preview (no deps)
-  function simpleMarkdown(md: string) {
-    return md
-      .replace(/^### (.+)/gm, "<h3>$1</h3>")
-      .replace(/^## (.+)/gm, "<h2>$1</h2>")
-      .replace(/^# (.+)/gm, "<h1>$1</h1>")
-      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*(.+?)\*/g, "<em>$1</em>")
-      .replace(/`(.+?)`/g, "<code>$1</code>")
-      .replace(/\n/g, "<br/>");
-  }
+ 
 
   return (
     <form action={formAction} className="space-y-6">
@@ -105,7 +111,7 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
               ))}
               {/* Markdown cheatsheet pills */}
               <div className="ml-auto flex items-center gap-1 px-3">
-                {[["**B**", "**text**"], ["*I*", "*text*"], ["`C`", "`code`"], ["# H", "## "]].map(([label, ins]) => (
+                {toolbar.map(([label, ins]) => (
                   <button
                     key={label}
                     type="button"
@@ -129,10 +135,35 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
                            focus:outline-none resize-none leading-relaxed placeholder:text-gray-600"
               />
             ) : (
-              <div
-                className="prose prose-invert prose-sm max-w-none p-5 min-h-75 leading-relaxed text-gray-300"
-                dangerouslySetInnerHTML={{ __html: simpleMarkdown(content) }}
-              />
+              <div className="prose prose-invert max-w-none p-5 min-h-125">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      img: ({ ...props }) => (
+                        <img
+                          {...props}
+                          className="rounded-xl w-full my-4"
+                          alt={props.alt || ""}
+                        />
+                      ),
+                      a: ({ ...props }) => (
+                        <a
+                          {...props}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-indigo-400 hover:text-indigo-300"
+                        />
+                      ),
+                      code: ({ children }) => (
+                        <code className="bg-gray-800 px-1 py-0.5 rounded">
+                          {children}
+                        </code>
+                      ),
+                    }}
+                  >
+                    {content}
+                  </ReactMarkdown>
+                </div>
             )}
           </div>
           {err("content") && <p className="text-xs text-red-400">{err("content")}</p>}
@@ -171,7 +202,7 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
             <input
               name="coverImage"
               defaultValue={defaultValues.coverImage}
-              placeholder="https://example.com/image.jpg"
+              placeholder="/uploads/image.jpg"
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
                          placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
