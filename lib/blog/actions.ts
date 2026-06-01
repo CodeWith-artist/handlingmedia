@@ -65,13 +65,13 @@ export async function createPostAction(
           };
         }
 
-        const { title, excerpt, content, coverImage, metaTitle, metaDescription, categories, tags } =
+        const { title, excerpt, content, coverImage, metaTitle, metaDescription, categories, tags , slug } =
           parsed.data;
 
-        const baseSlug = parsed.data.slug || slugify(title);
-        // Ensure unique slug
-        const existingCount = await prisma.post.count({ where: { slug: { startsWith: baseSlug } } });
-        const slug = existingCount === 0 ? baseSlug : `${baseSlug}-${existingCount}`;
+        // const baseSlug = parsed.data.slug || slugify(title);
+        // // Ensure unique slug
+        // const existingCount = await prisma.post.count({ where: { slug: { startsWith: baseSlug } } });
+        // const slug = existingCount === 0 ? baseSlug : `${baseSlug}-${existingCount}`;
 
         // Upsert tags by name
         const tagNames = tags ? tags.split(",").map((t) => t.trim()).filter(Boolean) : [];
@@ -92,7 +92,7 @@ export async function createPostAction(
         const post = await prisma.post.create({
           data: {
             title,
-            slug,
+            slug: slug || slugify(title), 
             excerpt,
             content,
             coverImage: coverImage || null,
