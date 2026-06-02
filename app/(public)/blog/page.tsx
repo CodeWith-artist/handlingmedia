@@ -1,4 +1,5 @@
-// app/blog/page.tsx — Public listing
+export const dynamic = "force-dynamic";
+
 import { getPublishedPosts } from "@/lib/blog/queries";
 import Link from "next/link";
 import Image from "next/image";
