@@ -48,7 +48,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
         </span>
       </div>
       {/* Render content — use a proper MD library like marked/remark in production */}
-      <div className="prose prose-invert max-w-none p-5 min-h-125">
+      <div className="prose prose-invert max-w-none min-h-125">
         <article className="prose prose-invert max-w-none">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content}
