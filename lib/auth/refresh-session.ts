@@ -6,15 +6,12 @@ export async function tryRefreshSession(
   pathname: string
 ): Promise<NextResponse | null> {
   try {
-    const refreshRes = await fetch(
-      new URL("/api/auth/refresh", req.url),
-      {
-        method: "POST",
-        headers: {
-          cookie: req.headers.get("cookie") ?? "",
-        },
-      }
-    );
+    const refreshRes = await fetch("https://handlingmedia.io/api/auth/refresh", {
+      method: "POST",
+      headers: {
+        cookie: req.headers.get("cookie") ?? "",
+      },
+    });
 
     if (!refreshRes.ok) {
       const loginUrl = req.nextUrl.clone();
