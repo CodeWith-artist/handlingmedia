@@ -3,7 +3,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAccessToken } from "@/lib/auth/tokens";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/auth/constants";
-import { prisma } from "./lib/prisma";
 import { tryRefreshSession } from "@/lib/auth/refresh-session";
 
 const PROTECTED_PREFIXES = ["/dashboard", "/settings", "/admin"];
