@@ -10,16 +10,7 @@ export default async function BlogPage() {
     <div className="max-w-5xl mx-auto px-6 py-26">
       <h1 className="text-4xl font-bold text-white mb-12">Blog</h1>
 
-      {posts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <h2 className="text-2xl font-semibold text-white mb-2">
-            No blog posts found
-          </h2>
-          <p className="text-gray-400">
-            There are no published posts available right now.
-          </p>
-        </div>
-      ) : (
+      
         <div className="space-y-8">
           {posts.map((post) => (
             <article
@@ -81,7 +72,7 @@ export default async function BlogPage() {
             </article>
           ))}
         </div>
-      )}
+      
     </div>
   );
 }
