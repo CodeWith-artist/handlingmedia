@@ -44,6 +44,11 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
   const [content, setContent] = useState(defaultValues.content ?? "");
   const [title, setTitle] = useState(defaultValues.title ?? "");
   const [slug, setSlug] = useState(defaultValues.slug ?? "");
+  const [excerpt, setExcerpt] = useState(defaultValues.excerpt ?? "");
+  const [coverImage, setCoverImage] = useState(defaultValues.coverImage ?? "");
+  const [tags, setTags] = useState(defaultValues.tags ?? "");
+  const [metaTitle, setMetaTitle] = useState(defaultValues.metaTitle ?? "");
+  const [metaDescription, setMetaDescription] = useState(defaultValues.metaDescription ?? "");
   const [selectedCats, setSelectedCats] = useState<string[]>(defaultValues.categoryIds ?? []);
 
   function autoSlug(val: string) {
@@ -173,7 +178,8 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
             <label className="block text-sm font-medium text-gray-400 mb-1.5">Excerpt</label>
             <textarea
               name="excerpt"
-              defaultValue={defaultValues.excerpt}
+              value={excerpt}
+              onChange={(e) => setExcerpt(e.target.value)}
               rows={2}
               placeholder="Short description shown in post listings…"
               className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white
@@ -201,7 +207,8 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
           <SideCard label="Cover image URL">
             <input
               name="coverImage"
-              defaultValue={defaultValues.coverImage}
+              value={coverImage}
+              onChange={(e) => setCoverImage(e.target.value)}
               placeholder="/uploads/image.jpg"
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
                          placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
@@ -233,7 +240,8 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
           <SideCard label="Tags (comma-separated)">
             <input
               name="tags"
-              defaultValue={defaultValues.tags}
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
               placeholder="ultrasound, training, radiology"
               className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
                          placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
@@ -247,7 +255,8 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
                 <label className="text-xs text-gray-500 mb-1 block">Meta title (max 60 chars)</label>
                 <input
                   name="metaTitle"
-                  defaultValue={defaultValues.metaTitle}
+                  value={metaTitle}
+                  onChange={(e) => setMetaTitle(e.target.value)}
                   maxLength={60}
                   placeholder="Leave blank to use post title"
                   className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
@@ -258,7 +267,8 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
                 <label className="text-xs text-gray-500 mb-1 block">Meta description (max 160 chars)</label>
                 <textarea
                   name="metaDescription"
-                  defaultValue={defaultValues.metaDescription}
+                  value={metaDescription}
+                  onChange={(e) => setMetaDescription(e.target.value)}
                   maxLength={160}
                   rows={3}
                   placeholder="Leave blank to use excerpt"
