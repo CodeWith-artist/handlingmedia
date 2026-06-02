@@ -49,34 +49,12 @@ export default async function PostPage({ params }: { params: { slug: string } })
       </div>
       {/* Render content — use a proper MD library like marked/remark in production */}
       <div className="prose prose-invert max-w-none p-5 min-h-125">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      img: ({ ...props }) => (
-                        <img
-                          {...props}
-                          className="rounded-xl w-full my-4"
-                          alt={props.alt || ""}
-                        />
-                      ),
-                      a: ({ ...props }) => (
-                        <a
-                          {...props}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-400 hover:text-indigo-300"
-                        />
-                      ),
-                      code: ({ children }) => (
-                        <code className="bg-gray-800 px-1 py-0.5 rounded">
-                          {children}
-                        </code>
-                      ),
-                    }}
-                  >
-                    {post.content}
-                  </ReactMarkdown>
-                </div>
+        <article className="prose prose-invert max-w-none">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {post.content}
+          </ReactMarkdown>
+        </article>
+      </div>
       <div className="mt-10 flex flex-wrap gap-2">
         {post.tags.map(({ tag }) => (
           <span key={tag.name} className="text-xs px-2.5 py-1 bg-gray-800 text-gray-400 rounded-full">

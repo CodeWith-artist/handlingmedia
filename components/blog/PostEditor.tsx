@@ -141,33 +141,11 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
               />
             ) : (
               <div className="prose prose-invert max-w-none p-5 min-h-125">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      img: ({ ...props }) => (
-                        <img
-                          {...props}
-                          className="rounded-xl w-full my-4"
-                          alt={props.alt || ""}
-                        />
-                      ),
-                      a: ({ ...props }) => (
-                        <a
-                          {...props}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-400 hover:text-indigo-300"
-                        />
-                      ),
-                      code: ({ children }) => (
-                        <code className="bg-gray-800 px-1 py-0.5 rounded">
-                          {children}
-                        </code>
-                      ),
-                    }}
-                  >
-                    {content}
-                  </ReactMarkdown>
+                  <article className="prose prose-invert max-w-none">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {content}
+                    </ReactMarkdown>
+                  </article>
                 </div>
             )}
           </div>
