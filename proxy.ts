@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAccessToken } from "@/lib/auth/tokens";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/auth/constants";
 import { prisma } from "./lib/prisma";
+import { tryRefreshSession } from "@/lib/auth/refresh-session";
 
 const PROTECTED_PREFIXES = ["/dashboard", "/settings", "/admin"];
 const GUEST_ONLY         = ["/login", "/register"];
@@ -34,42 +35,7 @@ export async function proxy(req: NextRequest) {
 
   // 2. Access token invalid/expired — try refresh
   if (!session && refreshToken && isProtected) {
-    try {
-      const refreshRes = await fetch(new URL("/api/auth/refresh", req.url), {
-        method:  "POST",
-        headers: { cookie: req.headers.get("cookie") ?? "" },
-      });
-
-      if (refreshRes.ok) {
-        // Refresh succeeded — forward new cookies and let request through
-        const newCookies = refreshRes.headers.getSetCookie();
-        const res = NextResponse.next();
-
-        for (const cookie of newCookies) {
-          res.headers.append("Set-Cookie", cookie);
-        }
-
-        return res;
-      }
-
-      // Refresh failed — redirect to login
-      const loginUrl = req.nextUrl.clone();
-      loginUrl.pathname = "/login";
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      const res = NextResponse.redirect(loginUrl);
-      res.cookies.delete(ACCESS_COOKIE);
-      res.cookies.delete(REFRESH_COOKIE);
-      return res;
-
-    } catch {
-      // Network or unexpected error — send to login
-      const loginUrl = req.nextUrl.clone();
-      loginUrl.pathname = "/login";
-      const res = NextResponse.redirect(loginUrl);
-      res.cookies.delete(ACCESS_COOKIE);
-      res.cookies.delete(REFRESH_COOKIE);
-      return res;
-    }
+    return await tryRefreshSession(req, pathname);
   }
 
   // 3. No session + protected route → login
@@ -97,18 +63,6 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL("/unauthorized", req.url));
   }
 
-  if (session && isProtected) {
-  const user = await prisma.user.findUnique({
-    where:  { id: session.sub },
-    select: { suspended: true },
-  });
-  if (user?.suspended) {
-    const res = NextResponse.redirect(new URL("/login?suspended=true", req.url));
-    res.cookies.delete(ACCESS_COOKIE);
-    res.cookies.delete(REFRESH_COOKIE);
-    return res;
-  }
-}
 
   return NextResponse.next();
 }

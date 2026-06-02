@@ -10,10 +10,7 @@ export default async function BlogDashboardPage() {
   const session = await requireSession();
   if (session.role === "USER") redirect("/unauthorized");
 
-  const [posts, categories] = await Promise.all([
-    getAllPostsForDashboard(session.userId, session.role),
-    getAllCategories(),
-  ]);
+  const posts = await getAllPostsForDashboard(session.userId, session.role);
 
   const actor = { userId: session.userId, role: session.role };
 
