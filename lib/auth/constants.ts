@@ -1,4 +1,4 @@
-export const ACCESS_TOKEN_EXPIRY_SECONDS = 15 * 60; // 15 minutes
+export const ACCESS_TOKEN_EXPIRY_SECONDS = 7 * 60 * 60; // 7 hours
 export const REFRESH_TOKEN_EXPIRY_SECONDS = 30 * 24 * 60 * 60; // 30 days
 
 export const ACCESS_COOKIE = "access_token";
