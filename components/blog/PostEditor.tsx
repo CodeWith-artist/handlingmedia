@@ -1,7 +1,7 @@
 // components/blog/PostEditor.tsx
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useRef, useCallback } from "react";
 import type { BlogResult } from "@/lib/blog/actions";
 import { Category } from "@/generated/prisma/client";
 import ReactMarkdown from "react-markdown";
@@ -25,22 +25,16 @@ interface Props {
 
 const initial: BlogResult = { success: true };
 
-const toolbar = [
-  ["B", "**bold text**"],
-  ["I", "*italic text*"],
-  ["Code", "`code`"],
-  ["H1", "# Heading"],
-  ["H2", "## Heading"],
-  ["Link", "[Link Text](https://example.com)"],
-  ["Img", "![Alt Text](https://example.com/image.jpg)"],
-  ["Quote", "> Quote"],
-  ["List", "\n- Item 1\n- Item 2"],
-  ["Table", "\n| Name | Age |\n|------|-----|\n| John | 25 |"],
-]
+// Word count + reading time
+function getStats(text: string) {
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return { words, minutes };
+}
 
 export default function PostEditor({ action, categories, defaultValues = {} }: Props) {
   const [state, formAction, pending] = useActionState(action, initial);
-  const [tab, setTab] = useState<"write" | "preview">("write");
+  const [showPreview, setShowPreview] = useState(false);
   const [content, setContent] = useState(defaultValues.content ?? "");
   const [title, setTitle] = useState(defaultValues.title ?? "");
   const [slug, setSlug] = useState(defaultValues.slug ?? "");
@@ -50,6 +44,14 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
   const [metaTitle, setMetaTitle] = useState(defaultValues.metaTitle ?? "");
   const [metaDescription, setMetaDescription] = useState(defaultValues.metaDescription ?? "");
   const [selectedCats, setSelectedCats] = useState<string[]>(defaultValues.categoryIds ?? []);
+  const [coverUploading, setCoverUploading] = useState(false);
+  const [imgUploading, setImgUploading] = useState(false);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
+  const inlineImgRef = useRef<HTMLInputElement>(null);
+
+  const stats = getStats(content);
 
   function autoSlug(val: string) {
     return val.toLowerCase().trim().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-");
@@ -65,14 +67,152 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
     );
   }
 
-  // Simple markdown → HTML preview (no deps)
- 
+  // Insert markdown at cursor position
+  const insertAt = useCallback((before: string, after: string = "", placeholder: string = "") => {
+    const el = textareaRef.current;
+    if (!el) return;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    const selected = content.slice(start, end) || placeholder;
+    const newVal = content.slice(0, start) + before + selected + after + content.slice(end);
+    setContent(newVal);
+    setTimeout(() => {
+      el.focus();
+      const pos = start + before.length + selected.length;
+      el.setSelectionRange(pos, pos);
+    }, 0);
+  }, [content]);
+
+  // Keyboard shortcuts
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    switch (e.key.toLowerCase()) {
+      case "b":
+        e.preventDefault();
+        insertAt("**", "**", "bold text");
+        break;
+      case "i":
+        e.preventDefault();
+        insertAt("*", "*", "italic text");
+        break;
+      case "u":
+        e.preventDefault();
+        insertAt("<u>", "</u>", "underlined text");
+        break;
+      case "k":
+        e.preventDefault();
+        insertAt("[", "](https://)", "link text");
+        break;
+    }
+  }
+
+  // Toolbar buttons
+  const toolbar = [
+    { label: "B", title: "Bold (Ctrl+B)", action: () => insertAt("**", "**", "bold text"), style: "font-bold" },
+    { label: "I", title: "Italic (Ctrl+I)", action: () => insertAt("*", "*", "italic text"), style: "italic" },
+    { label: "U", title: "Underline (Ctrl+U)", action: () => insertAt("<u>", "</u>", "underlined text"), style: "underline" },
+    { label: "H1", title: "Heading 1", action: () => insertAt("# ", "", "Heading"), style: "" },
+    { label: "H2", title: "Heading 2", action: () => insertAt("## ", "", "Heading"), style: "" },
+    { label: "H3", title: "Heading 3", action: () => insertAt("### ", "", "Heading"), style: "" },
+    { label: "Link", title: "Link (Ctrl+K)", action: () => insertAt("[", "](https://)", "link text"), style: "" },
+    { label: "Quote", title: "Blockquote", action: () => insertAt("> ", "", "quote"), style: "" },
+    { label: "Code", title: "Inline Code", action: () => insertAt("`", "`", "code"), style: "font-mono text-xs" },
+    { label: "```", title: "Code Block", action: () => insertAt("```\n", "\n```", "code block"), style: "font-mono text-xs" },
+    { label: "List", title: "Bullet List", action: () => insertAt("\n- ", "", "item"), style: "" },
+    { label: "1.", title: "Numbered List", action: () => insertAt("\n1. ", "", "item"), style: "" },
+    { label: "---", title: "Divider", action: () => insertAt("\n---\n", ""), style: "" },
+  ];
+
+  // Cover image upload
+  async function handleCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setCoverUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.url) setCoverImage(data.url);
+    } catch {
+      alert("Image upload failed. Try again.");
+    } finally {
+      setCoverUploading(false);
+    }
+  }
+
+  // Inline image upload inside editor
+  async function handleInlineImgUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImgUploading(true);
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const data = await res.json();
+      if (data.url) insertAt(`![${file.name}](${data.url})`, "");
+    } catch {
+      alert("Image upload failed. Try again.");
+    } finally {
+      setImgUploading(false);
+      if (inlineImgRef.current) inlineImgRef.current.value = "";
+    }
+  }
+
+  // Paste handler — strips HTML to markdown-friendly plain text
+  function handlePaste(e: React.ClipboardEvent<HTMLTextAreaElement>) {
+    const html = e.clipboardData.getData("text/html");
+    if (!html) return; // plain text paste — default behaviour
+    e.preventDefault();
+
+    // Convert common HTML tags to markdown
+    let md = html
+      .replace(/<h1[^>]*>(.*?)<\/h1>/gi, "# $1\n")
+      .replace(/<h2[^>]*>(.*?)<\/h2>/gi, "## $1\n")
+      .replace(/<h3[^>]*>(.*?)<\/h3>/gi, "### $1\n")
+      .replace(/<h4[^>]*>(.*?)<\/h4>/gi, "#### $1\n")
+      .replace(/<strong[^>]*>(.*?)<\/strong>/gi, "**$1**")
+      .replace(/<b[^>]*>(.*?)<\/b>/gi, "**$1**")
+      .replace(/<em[^>]*>(.*?)<\/em>/gi, "*$1*")
+      .replace(/<i[^>]*>(.*?)<\/i>/gi, "*$1*")
+      .replace(/<u[^>]*>(.*?)<\/u>/gi, "<u>$1</u>")
+      .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, "[$2]($1)")
+      .replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*\/?>/gi, "![$2]($1)")
+      .replace(/<img[^>]*src="([^"]*)"[^>]*\/?>/gi, "![]($1)")
+      .replace(/<li[^>]*>(.*?)<\/li>/gi, "- $1\n")
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<p[^>]*>(.*?)<\/p>/gi, "$1\n\n")
+      .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gi, "> $1\n")
+      .replace(/<code[^>]*>(.*?)<\/code>/gi, "`$1`")
+      .replace(/<[^>]+>/g, "") // strip remaining tags
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&quot;/g, '"')
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+
+    const el = textareaRef.current;
+    if (!el) return;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    const newVal = content.slice(0, start) + md + content.slice(end);
+    setContent(newVal);
+    setTimeout(() => {
+      el.focus();
+      const pos = start + md.length;
+      el.setSelectionRange(pos, pos);
+    }, 0);
+  }
 
   return (
     <form action={formAction} className="space-y-6">
+
       {/* Global error */}
       {!state.success && !state.fields && (
-        <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
+        <div className="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
           {state.error}
         </div>
       )}
@@ -87,10 +227,10 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
             if (!defaultValues.slug) setSlug(autoSlug(e.target.value));
           }}
           placeholder="Post title"
-          className="w-full bg-transparent text-3xl font-bold text-white placeholder:text-gray-600 
-                     border-b border-gray-800 pb-3 focus:outline-none focus:border-indigo-500 transition-colors"
+          className="w-full bg-white text-3xl font-bold text-gray-900 placeholder:text-gray-300
+                     border-b border-gray-200 pb-3 focus:outline-none focus:border-indigo-400 transition-colors"
         />
-        {err("title") && <p className="mt-1 text-xs text-red-400">{err("title")}</p>}
+        {err("title") && <p className="mt-1 text-xs text-red-500">{err("title")}</p>}
       </div>
 
       {/* Two-col layout */}
@@ -99,69 +239,109 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
         {/* Left: main content */}
         <div className="lg:col-span-2 space-y-5">
 
-          {/* Markdown toolbar + editor */}
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl overflow-hidden">
-            {/* Tabs */}
-            <div className="flex border-b border-gray-800">
-              {(["write", "preview"] as const).map((t) => (
+          {/* Editor */}
+          <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+
+            {/* Top bar — toolbar + preview toggle */}
+            <div className="flex flex-wrap items-center gap-1 px-3 py-2 border-b border-gray-100 bg-gray-50">
+              {toolbar.map((btn) => (
                 <button
-                  key={t}
+                  key={btn.label}
                   type="button"
-                  onClick={() => setTab(t)}
-                  className={`px-5 py-3 text-sm font-medium transition-colors
-                    ${tab === t ? "text-white border-b-2 border-indigo-500" : "text-gray-500 hover:text-gray-300"}`}
+                  title={btn.title}
+                  onClick={btn.action}
+                  className={`px-2 py-1 text-xs bg-white border border-gray-200 text-gray-600 rounded
+                              hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-700
+                              transition-colors ${btn.style}`}
                 >
-                  {t.charAt(0).toUpperCase() + t.slice(1)}
+                  {btn.label}
                 </button>
               ))}
-              {/* Markdown cheatsheet pills */}
-              <div className="ml-auto flex items-center gap-1 px-3">
-                {toolbar.map(([label, ins]) => (
-                  <button
-                    key={label}
-                    type="button"
-                    onClick={() => setContent((c) => c + ins)}
-                    className="px-2 py-0.5 text-xs bg-gray-800 text-gray-400 rounded hover:text-white transition-colors font-mono"
-                  >
-                    {label}
-                  </button>
-                ))}
+
+              {/* Inline image upload */}
+              <button
+                type="button"
+                title="Insert image"
+                onClick={() => inlineImgRef.current?.click()}
+                disabled={imgUploading}
+                className="px-2 py-1 text-xs bg-white border border-gray-200 text-gray-600 rounded
+                           hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-700
+                           transition-colors disabled:opacity-50"
+              >
+                {imgUploading ? "Uploading…" : "🖼 Img"}
+              </button>
+              <input
+                ref={inlineImgRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleInlineImgUpload}
+              />
+
+              {/* Preview toggle */}
+              <div className="ml-auto">
+                <button
+                  type="button"
+                  onClick={() => setShowPreview((v) => !v)}
+                  className={`px-3 py-1 text-xs rounded border transition-colors font-medium
+                    ${showPreview
+                      ? "bg-indigo-600 text-white border-indigo-600"
+                      : "bg-white text-gray-600 border-gray-200 hover:border-indigo-300 hover:text-indigo-700"
+                    }`}
+                >
+                  {showPreview ? "Hide Preview" : "Show Preview"}
+                </button>
               </div>
             </div>
 
-            {tab === "write" ? (
-              <textarea
-                name="content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Write your post in Markdown…"
-                rows={18}
-                className="w-full bg-transparent text-gray-300 text-sm p-5 font-mono
-                           focus:outline-none resize-none leading-relaxed placeholder:text-gray-600"
-              />
-            ) : (
-              <div className="prose prose-invert max-w-none p-5 min-h-125">
-                  <article className="prose prose-invert max-w-none">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {content}
-                    </ReactMarkdown>
-                  </article>
+            {/* Editor + optional side preview */}
+            <div className={`grid ${showPreview ? "grid-cols-2 divide-x divide-gray-100" : "grid-cols-1"}`}>
+              {/* Textarea */}
+              <div className="relative">
+                <textarea
+                  ref={textareaRef}
+                  name="content"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  onPaste={handlePaste}
+                  placeholder="Write your post in Markdown… (supports Ctrl+B, Ctrl+I, Ctrl+U, Ctrl+K)"
+                  rows={22}
+                  className="w-full bg-white text-gray-800 text-sm p-5 font-mono
+                             focus:outline-none resize-none leading-relaxed placeholder:text-gray-300"
+                />
+                {/* Word count bar */}
+                <div className="absolute bottom-2 right-3 text-xs text-gray-400 select-none">
+                  {stats.words} words · {stats.minutes} min read
                 </div>
-            )}
+              </div>
+
+              {/* Live Preview */}
+              {showPreview && (
+                <div className="prose prose-sm max-w-none p-5 overflow-y-auto max-h-[540px] bg-white text-gray-800">
+                  {content.trim() ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+                  ) : (
+                    <p className="text-gray-300 italic text-sm">Preview will appear here…</p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-          {err("content") && <p className="text-xs text-red-400">{err("content")}</p>}
+
+          {err("content") && <p className="text-xs text-red-500">{err("content")}</p>}
 
           {/* Excerpt */}
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1.5">Excerpt</label>
+            <label className="block text-sm font-medium text-gray-600 mb-1.5">Excerpt</label>
             <textarea
               name="excerpt"
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value)}
               rows={2}
               placeholder="Short description shown in post listings…"
-              className="w-full bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 text-sm text-white
-                         placeholder:text-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800
+                         placeholder:text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
             />
           </div>
         </div>
@@ -176,21 +356,47 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
               value={slug}
               onChange={(e) => setSlug(autoSlug(e.target.value))}
               placeholder="auto-generated"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
-                         placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800
+                         placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
             />
           </SideCard>
 
           {/* Cover image */}
-          <SideCard label="Cover image URL">
+          <SideCard label="Cover Image">
+            {/* File upload */}
+            <button
+              type="button"
+              onClick={() => coverInputRef.current?.click()}
+              disabled={coverUploading}
+              className="w-full mb-2 px-3 py-2 text-sm bg-indigo-50 border border-indigo-200
+                         text-indigo-700 rounded-lg hover:bg-indigo-100 transition-colors
+                         disabled:opacity-50 font-medium"
+            >
+              {coverUploading ? "Uploading…" : "📁 Upload Image"}
+            </button>
+            <input
+              ref={coverInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleCoverUpload}
+            />
+            {/* Or URL */}
             <input
               name="coverImage"
               value={coverImage}
               onChange={(e) => setCoverImage(e.target.value)}
-              placeholder="/uploads/image.jpg"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
-                         placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              placeholder="Or paste image URL…"
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800
+                         placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
             />
+            {/* Preview */}
+            {coverImage && (
+              <div className="mt-2 rounded-lg overflow-hidden border border-gray-200">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={coverImage} alt="Cover preview" className="w-full h-32 object-cover" />
+              </div>
+            )}
           </SideCard>
 
           {/* Categories */}
@@ -203,13 +409,13 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
                     type="checkbox"
                     checked={selectedCats.includes(cat.id)}
                     onChange={() => toggleCat(cat.id)}
-                    className="w-4 h-4 rounded border-gray-600 bg-gray-800 text-indigo-500 focus:ring-indigo-500"
+                    className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-400"
                   />
-                  <span className="text-sm text-gray-300">{cat.name}</span>
+                  <span className="text-sm text-gray-700">{cat.name}</span>
                 </label>
               ))}
               {categories.length === 0 && (
-                <p className="text-xs text-gray-600">No categories yet. Admin can create them.</p>
+                <p className="text-xs text-gray-400">No categories yet. Admin can create them.</p>
               )}
             </div>
           </SideCard>
@@ -220,9 +426,9 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
               name="tags"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              placeholder="ultrasound, training, radiology"
-              className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
-                         placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              placeholder="marketing, social media, tips"
+              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800
+                         placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
             />
           </SideCard>
 
@@ -237,9 +443,10 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
                   onChange={(e) => setMetaTitle(e.target.value)}
                   maxLength={60}
                   placeholder="Leave blank to use post title"
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
-                             placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800
+                             placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-400"
                 />
+                <p className="text-right text-xs text-gray-400 mt-0.5">{metaTitle.length}/60</p>
               </div>
               <div>
                 <label className="text-xs text-gray-500 mb-1 block">Meta description (max 160 chars)</label>
@@ -250,9 +457,10 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
                   maxLength={160}
                   rows={3}
                   placeholder="Leave blank to use excerpt"
-                  className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-white
-                             placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 resize-none"
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800
+                             placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-indigo-400 resize-none"
                 />
+                <p className="text-right text-xs text-gray-400 mt-0.5">{metaDescription.length}/160</p>
               </div>
             </div>
           </SideCard>
@@ -262,12 +470,13 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
             type="submit"
             disabled={pending}
             className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50
-                       text-white text-sm font-semibold transition-colors"
+                       text-white text-sm font-semibold transition-colors shadow-sm"
           >
             {pending ? "Saving…" : "Save post"}
           </button>
+
           {state.success && state.message && (
-            <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 text-sm text-emerald-400">
+            <div className="rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
               {state.message}
             </div>
           )}
@@ -276,13 +485,10 @@ export default function PostEditor({ action, categories, defaultValues = {} }: P
     </form>
   );
 }
-          
-        
-
 
 function SideCard({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+    <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
       <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">{label}</p>
       {children}
     </div>
