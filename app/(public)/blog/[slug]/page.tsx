@@ -28,7 +28,8 @@ export default async function PostPage({ params }: { params: { slug: string } })
   return (
     <article className="max-w-5xl mx-auto px-6 py-26">
       {post.coverImage && (
-        <img src={post.coverImage} alt={post.title} className="w-full h-64 object-cover rounded-2xl mb-10" />
+        <img src={post.coverImage} alt={post.title}
+       className=" object-contain rounded-2xl mb-8" />
       )}
       <div className="flex flex-wrap gap-2 mb-4">
         {post.categories.map(({ category }) => (

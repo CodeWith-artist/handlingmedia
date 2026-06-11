@@ -19,14 +19,11 @@ export default async function BlogPage() {
               className="border-b border-gray-800 pb-8"
             >
               {post.coverImage && (
-                <div className="relative w-full h-64 mb-4">
-                  <Image
+                <div className="relative w-full mb-4">
+                  <img
                     src={post.coverImage}
                     alt={post.title}
-                    fill
-                    className="object-cover rounded-lg"
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className=" object-contain rounded-2xl"
                   />
                 </div>
               )}
